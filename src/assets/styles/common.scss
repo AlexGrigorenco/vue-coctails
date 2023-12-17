@@ -17,3 +17,23 @@ a {
     font-family: 'Raleway', 'Arial', sans-serif;
     color: $text;
 }
+.container {
+  padding: 15px;
+}
+.title{
+  padding: 32px 0;
+  text-align: center;
+  font-size: clamp(20px, 0.977rem + 1.36vw, 32px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 6.4px;
+  text-transform: uppercase; 
+}
+
+.line {
+  margin: 0 auto;
+  width: 100px;
+  height: 5px; 
+  background: $accent;
+}
