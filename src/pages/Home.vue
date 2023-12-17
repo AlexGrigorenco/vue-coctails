@@ -1,17 +1,10 @@
 <script setup>
-    
+    import AppLayout from "@/components/AppLayout.vue";
 </script>
 
 
 <template>
-    <div>
-        <h1 class="norn">
-            Home
-        </h1>
-        <h1 class="ral">
-            Home
-        </h1>
-    </div>
+    <AppLayout imgName="home-bg.jpg"  />
 </template>
 
 
