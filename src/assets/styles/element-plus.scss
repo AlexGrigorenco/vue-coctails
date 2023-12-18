@@ -1,0 +1,58 @@
+.select {
+    .el-input{
+        .el-input__wrapper {
+            background: $background;
+            box-shadow: 0 0 0 1px $text-muted inset;
+
+            .el-input__inner {
+                color: $text-muted;
+            }
+            &.is-focus {
+                box-shadow: 0 0 0 1px $accent inset !important;
+            }
+        }
+        &.is-focus {
+            & .el-input__wrapper.is-focus {
+                box-shadow: 0 0 0 1px $accent inset !important;
+            }
+        }
+    }
+    
+}
+
+.el-popper.is-light{
+    background-color: $background;
+    border: 1px solid $accent;
+
+    .el-select-dropdown {
+        padding: 0 8px;
+        background: $background;
+        z-index: 2;
+
+        .el-select-dropdown__item {
+            color: $text;
+            padding: 0 6px;
+
+            &.hover {
+                background: $accent;
+            }
+            &[aria-selected="true"] {
+                color: $accent;
+
+                &.hover {
+                    color: $text;
+                }
+            }
+        }
+    }
+
+    .el-popper__arrow {
+        background: $background;
+
+        &::before{
+            background: $accent;
+            border: 1px solid $accent;
+            z-index: 1;
+        }
+    }
+}
