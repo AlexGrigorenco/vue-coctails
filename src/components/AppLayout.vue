@@ -45,12 +45,14 @@ export default {
 <template>
   <div class="root">
     <div :style="setBackground()" class="img"></div>
-    <div class="main" :class="{active: mainShow}">
-      <el-button class="bttn">Get random cocktail</el-button>
-      <slot></slot>
+    <div class="main" :class="{ active: mainShow }">
+      <div class="slot-wrapper">
+        <el-button class="bttn">Get random cocktail</el-button>
+        <slot></slot>
+      </div>
 
       <div @click="mainShow = !mainShow" class="slide-main">
-        <div class="arrow" :class="{active: !mainShow}"></div>
+        <div class="arrow" :class="{ active: !mainShow }"></div>
       </div>
     </div>
   </div>
@@ -62,7 +64,7 @@ export default {
 .root {
   display: flex;
   background: $background;
-  min-height: 100vh;
+  height: 100vh;
 }
 .img {
   flex: 1;
@@ -76,9 +78,18 @@ export default {
   flex: 1;
   padding: 32px 40px;
 }
+.slot-wrapper {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
 
 .bttn {
-  position: absolute;
+  position: fixed;
   top: 32px;
   right: 40px;
   padding: 8px 16px;
@@ -149,12 +160,12 @@ export default {
   .main {
     z-index: 2;
     background: rgba($background, 0.8);
-    animation: hideMain .6s linear forwards;
+    animation: hideMain 0.6s linear forwards;
     &.active {
-      animation: showMain .6s linear forwards;
+      animation: showMain 0.6s linear forwards;
 
       @keyframes showMain {
-        to{
+        to {
           transform: translateY(-96%);
         }
         from {
@@ -164,13 +175,13 @@ export default {
     }
 
     @keyframes hideMain {
-        to{
-          transform: translateY(0);
-        }
-        from {
-          transform: translateY(-96%);
-        }
+      to {
+        transform: translateY(0);
       }
+      from {
+        transform: translateY(-96%);
+      }
+    }
   }
 
   .slide-main {

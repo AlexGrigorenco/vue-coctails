@@ -7,30 +7,46 @@ import { storeToRefs } from "pinia";
 const rootStore = useRootStore();
 rootStore.getIngredients();
 
-const { ingredients } = storeToRefs(rootStore);
+const { ingredients, coctails } = storeToRefs(rootStore);
 const ingredient = ref(null);
+
+function getCoctails() {
+  rootStore.getCoctails(ingredient.value);
+}
 </script>
 
 
 <template>
   <AppLayout imgName="home-bg.jpg">
     <div class="wrapper container">
-      <div class="title">Choose your drink</div>
-      <div class="line"></div>
-      <div class="select-wrapper">
-        <el-select
-          v-model="ingredient"
-          class="select"
-          placeholder="Choose main ingredient"
-          size="large"
-        >
-          <el-option
-            v-for="item in ingredients"
-            :key="item.strIngredient1"
-            :label="item.strIngredient1"
-            :value="item.strIngredient1"
-          />
-        </el-select>
+      <div v-if="!ingredient || !coctails">
+        <div class="title">Choose your drink</div>
+        <div class="line"></div>
+        <div class="select-wrapper">
+          <el-select
+            v-model="ingredient"
+            class="select"
+            placeholder="Choose main ingredient"
+            size="large"
+            @change="getCoctails"
+          >
+            <el-option
+              v-for="item in ingredients"
+              :key="item.strIngredient1"
+              :label="item.strIngredient1"
+              :value="item.strIngredient1"
+            />
+          </el-select>
+        </div>
+        <div class="text">
+          Try our delicious cocktail recipes for every occasion. Find delicious
+          cocktail recipes by ingredient through our cocktail generator.
+        </div>
+        <div class="img-wrapper"></div>
+      </div>
+      <div v-else>
+        <div class="title">COCKTAILS WITH {{ ingredient }}</div>
+        <div class="line"></div>
       </div>
     </div>
   </AppLayout>
@@ -41,13 +57,35 @@ const ingredient = ref(null);
 @import "../assets/styles/main.scss";
 
 .wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100%;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 }
 .select-wrapper {
-    padding: 60px 0;
+  padding: 60px 0;
+}
+.text {
+  padding: 60px 0;
+  color: $text-muted;
+  text-align: center;
+  max-width: 516px;
+  line-height: 36px;
+  letter-spacing: 1.6px;
+  font-weight: 400;
+}
+.img-wrapper {
+  width: 100%;
+  max-width: 345px;
+  aspect-ratio: 345/120;
+  background-image: url("/src/assets/images/home-main-img.png");
 }
 </style>
