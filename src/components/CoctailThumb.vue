@@ -18,12 +18,12 @@ export default {
 </script>
 
 <template>
-  <div class="root">
+  <RouterLink :to="`/coctails/${coctail.idDrink}`" class="root">
     <div class="img" :style="setBgImage()"></div>
     <div class="name">
         {{ coctail.strDrink }}
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 
