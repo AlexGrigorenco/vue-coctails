@@ -3,6 +3,7 @@ import { ref } from "vue";
 import AppLayout from "@/components/AppLayout.vue";
 import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
+import CoctailThumb from "@/components/CoctailThumb.vue";
 
 const rootStore = useRootStore();
 rootStore.getIngredients();
@@ -47,6 +48,9 @@ function getCoctails() {
       <div v-else>
         <div class="title">COCKTAILS WITH {{ ingredient }}</div>
         <div class="line"></div>
+        <div class="coctails-list">
+          <CoctailThumb v-for="coctail in coctails" :key="coctail.idDrink" :coctail="coctail" />
+        </div>
       </div>
     </div>
   </AppLayout>
@@ -87,5 +91,23 @@ function getCoctails() {
   max-width: 345px;
   aspect-ratio: 345/120;
   background-image: url("/src/assets/images/home-main-img.png");
+}
+
+.coctails-list {
+  width: 100%;
+  padding-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+@media (max-width: 900px) {
+  .coctails-list {
+  grid-template-columns: repeat(2, 1fr);
+}
+}
+@media (max-width: 450px) {
+  .coctails-list {
+  grid-template-columns: repeat(1, 1fr);
+}
 }
 </style>
