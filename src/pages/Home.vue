@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from "vue";
 import AppLayout from "@/components/AppLayout.vue";
 import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
@@ -8,11 +7,10 @@ import CoctailThumb from "@/components/CoctailThumb.vue";
 const rootStore = useRootStore();
 rootStore.getIngredients();
 
-const { ingredients, coctails } = storeToRefs(rootStore);
-const ingredient = ref(null);
+const { ingredients, ingredient, coctails } = storeToRefs(rootStore);
 
 function getCoctails() {
-  rootStore.getCoctails(ingredient.value);
+  rootStore.getCoctails(rootStore.ingredient);
 }
 </script>
 
@@ -25,8 +23,10 @@ function getCoctails() {
         <div class="line"></div>
         <div class="select-wrapper">
           <el-select
-            v-model="ingredient"
+            v-model="rootStore.ingredient"
             class="select"
+            filterable
+            allow-create
             placeholder="Choose main ingredient"
             size="large"
             @change="getCoctails"
@@ -46,7 +46,7 @@ function getCoctails() {
         <div class="img-wrapper"></div>
       </div>
       <div v-else>
-        <div class="title">COCKTAILS WITH {{ ingredient }}</div>
+        <div class="title">COCKTAILS WITH {{ rootStore.ingredient }}</div>
         <div class="line"></div>
         <div class="coctails-list">
           <CoctailThumb v-for="coctail in coctails" :key="coctail.idDrink" :coctail="coctail" />

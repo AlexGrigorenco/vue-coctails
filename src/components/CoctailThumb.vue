@@ -47,4 +47,10 @@ export default {
     aspect-ratio: 1/1;
     background-size: cover;
 }
+.name{
+    transition: .3s linear;
+    &:hover {
+        color: $accent;
+    }
+}
 </style>
