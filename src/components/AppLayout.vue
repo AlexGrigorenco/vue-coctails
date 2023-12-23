@@ -19,23 +19,25 @@ export default {
   },
 
   mounted() {
-    this.setBackground();
+    this.setBaseBg();
   },
 
   watch: {
-    imgUrl: "setBackground",
-    imgName: "setBackground",
+    imgUrl: "setLinkBg",
+    imgName: "setBaseBg",
   },
 
   methods: {
-    setBackground() {
-      if (this.imgUrl) {
-        this.imagePath = this.imgUrl;
-      } else if (this.imgName) {
+    setBaseBg() {
         this.imagePath = require(`@/assets/images/${this.imgName}`);
-      }
+      
       return {
         backgroundImage: `url(${this.imagePath})`,
+      };
+    },
+    setLinkBg() {
+      return {
+        backgroundImage: `url(${this.imgUrl})`,
       };
     },
   },
@@ -44,7 +46,9 @@ export default {
 
 <template>
   <div class="root">
-    <div :style="setBackground()" class="img"></div>
+    <div :style="setBaseBg()" class="base-bg">
+      <div :style="setLinkBg()" class="link-bg"></div>
+    </div>
     <div class="main" :class="{ active: mainShow }">
       <div class="slot-wrapper">
         <el-button class="bttn">Get random cocktail</el-button>
@@ -66,11 +70,23 @@ export default {
   background: $background;
   height: 100vh;
 }
-.img {
+.base-bg {
+  position: relative;
   flex: 1;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
+  
+  .link-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+  }
 }
 
 .main {

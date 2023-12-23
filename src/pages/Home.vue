@@ -16,7 +16,7 @@ function getCoctails() {
 
 
 <template>
-  <AppLayout imgName="home-bg.jpg">
+  <AppLayout :imgName="ingredient ? `home-main-img-coctail-choice.jpg` : `home-bg.jpg`">
     <div class="wrapper container">
       <div v-if="!ingredient || !coctails">
         <div class="title">Choose your drink</div>

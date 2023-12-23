@@ -18,13 +18,14 @@ async function getCoctail() {
 getCoctail();
 </script>
 <template>
-  <AppLayout imgName="home-bg.jpg">
-    <div class="wrapper container">
-      <div>
-        <div class="title">Choose your drink</div>
+  <AppLayout imgName="coctail-bg.jpg" :imgUrl="coctail ? coctail.strDrinkThumb : ''">
+    <div v-if="coctail" class="wrapper container">
+        <div class="title">{{ coctail.strDrink }}</div>
         <div class="line"></div>
-        {{ coctail }}
-      </div>
+
+        <div class="coctail-formula">
+            {{ coctail.strInstructions }}
+        </div>
     </div>
   </AppLayout>
 </template>
