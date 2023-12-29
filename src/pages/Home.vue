@@ -12,11 +12,15 @@ const { ingredients, ingredient, coctails } = storeToRefs(rootStore);
 function getCoctails() {
   rootStore.getCoctails(rootStore.ingredient);
 }
+
+function removeIngredient() {
+  rootStore.setIngredient(null)
+}
 </script>
 
 
 <template>
-  <AppLayout :imgName="ingredient ? `home-main-img-coctail-choice.jpg` : `home-bg.jpg`">
+  <AppLayout :imgName="ingredient ? `home-main-img-coctail-choice.jpg` : `home-bg.jpg`" :backFunc="removeIngredient" :backButtonVisible="!!ingredient">
     <div class="wrapper container">
       <div v-if="!ingredient || !coctails">
         <div class="title">Choose your drink</div>
@@ -107,7 +111,7 @@ function getCoctails() {
 }
 @media (max-width: 450px) {
   .coctails-list {
-  grid-template-columns: repeat(1, 1fr);
-}
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 </style>

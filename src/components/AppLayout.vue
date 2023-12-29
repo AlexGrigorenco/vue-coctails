@@ -1,5 +1,9 @@
 <script>
+import BackButton from "./BackButton.vue";
 export default {
+  components: {
+    BackButton,
+  },
   props: {
     imgUrl: {
       type: String,
@@ -9,6 +13,14 @@ export default {
       type: String,
       required: false,
     },
+    backFunc: {
+      type: Function,
+      required: true,
+    },
+    backButtonVisible: {
+      type: Boolean,
+      default: true,
+    }
   },
 
   data() {
@@ -29,8 +41,8 @@ export default {
 
   methods: {
     setBaseBg() {
-        this.imagePath = require(`@/assets/images/${this.imgName}`);
-      
+      this.imagePath = require(`@/assets/images/${this.imgName}`);
+
       return {
         backgroundImage: `url(${this.imagePath})`,
       };
@@ -50,8 +62,11 @@ export default {
       <div :style="setLinkBg()" class="link-bg"></div>
     </div>
     <div class="main" :class="{ active: mainShow }">
+      <div class="buttons-wrapper">
+          <BackButton @click="backFunc" class="back-button" v-if="backButtonVisible"/>
+          <el-button class="bttn">Get random cocktail</el-button>
+        </div>
       <div class="slot-wrapper">
-        <el-button class="bttn">Get random cocktail</el-button>
         <slot></slot>
       </div>
 
@@ -76,7 +91,7 @@ export default {
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
-  
+
   .link-bg {
     position: absolute;
     top: 0;
@@ -104,23 +119,44 @@ export default {
   }
 }
 
-.bttn {
-  position: fixed;
+.buttons-wrapper {
+  position: absolute;
   top: 32px;
+  left: 40px;
   right: 40px;
-  padding: 8px 16px;
-  background: $accent;
-  border: none;
-  color: $text;
-  font-family: "Raleway", "Arial", sans-serif;
-  transition: 0.3s linear;
+  z-index: 5;
+  .back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    border-color: $text;
+    transition: 0.3s linear;
 
-  &:hover {
-    background: darken($accent, 10%);
+    &:hover {
+      transform: scale(0.95);
+      border-color: $accent;
+    }
   }
-  &:active {
-    transform: scale(0.8);
-    transition: 0;
+
+  .bttn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 16px;
+    background: $accent;
+    border: none;
+    color: $text;
+    font-family: "Raleway", "Arial", sans-serif;
+    transition: 0.3s linear;
+
+    &:hover {
+      background: darken($accent, 10%);
+    }
+    &:active {
+      transform: scale(0.8);
+      transition: 0;
+    }
   }
 }
 
@@ -166,6 +202,7 @@ export default {
 @media (max-width: 768px) {
   .img,
   .main {
+    padding: 30px 15px;
     position: fixed;
     top: 0;
     right: 0;
@@ -198,6 +235,12 @@ export default {
         transform: translateY(-96%);
       }
     }
+  }
+
+  .buttons-wrapper {
+    top: 30px;
+    left: 15px;
+    right: 15px;
   }
 
   .slide-main {
