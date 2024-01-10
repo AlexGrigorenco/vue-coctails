@@ -1,9 +1,14 @@
 <script>
+import { useRoute, useRouter } from 'vue-router';
+import { ROUTER_PATH } from '@/constants/router';
 import BackButton from "./BackButton.vue";
+
 export default {
+
   components: {
     BackButton,
   },
+
   props: {
     imgUrl: {
       type: String,
@@ -27,6 +32,8 @@ export default {
     return {
       imagePath: "",
       mainShow: false,
+      route: useRoute(),
+      router: useRouter(),
     };
   },
 
@@ -37,6 +44,12 @@ export default {
   watch: {
     imgUrl: "setLinkBg",
     imgName: "setBaseBg",
+  },
+
+  computed: {
+    routeName() {
+      return this.route.name
+    }
   },
 
   methods: {
@@ -52,6 +65,9 @@ export default {
         backgroundImage: `url(${this.imgUrl})`,
       };
     },
+    goToCoctailRandom(){
+      this.router.push(ROUTER_PATH.COCTAIL_RANDOM)
+    }
   },
 };
 </script>
@@ -64,7 +80,8 @@ export default {
     <div class="main" :class="{ active: mainShow }">
       <div class="buttons-wrapper">
           <BackButton @click="backFunc" class="back-button" v-if="backButtonVisible"/>
-          <el-button class="bttn">Get random cocktail</el-button>
+
+          <el-button class="bttn" @click="goToCoctailRandom">Get random cocktail</el-button>
         </div>
       <div class="slot-wrapper">
         <slot></slot>

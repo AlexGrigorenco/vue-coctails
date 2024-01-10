@@ -1,22 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { ROUTER_PATH } from '@/constants/router'
 import Home from '@/pages/Home.vue'
 import Coctail from '@/pages/Coctail.vue'
 import CoctailRandom from '@/pages/CoctailRandom.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
+    path: ROUTER_PATH.HOME,
+    name: ROUTER_PATH.HOME,
     component: Home
   },
   {
-    path: '/coctails/:id',
-    name: 'coctail',
+    path: ROUTER_PATH.COCTAIL,
+    name: ROUTER_PATH.COCTAIL,
     component: Coctail
   },
   {
-    path: '/coctail-random',
-    name: 'coctail-random',
+    path: ROUTER_PATH.COCTAIL_RANDOM,
+    name: ROUTER_PATH.COCTAIL_RANDOM,
     component: CoctailRandom
   },
 ]
