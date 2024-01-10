@@ -66,7 +66,10 @@ export default {
       };
     },
     goToCoctailRandom(){
-      this.router.push(ROUTER_PATH.COCTAIL_RANDOM)
+      this.router.push(ROUTER_PATH.COCTAIL_RANDOM);
+      if(this.routeName === ROUTER_PATH.COCTAIL_RANDOM){
+        this.router.go();
+      }
     }
   },
 };

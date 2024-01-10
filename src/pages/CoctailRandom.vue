@@ -1,19 +1,30 @@
 <script setup>
 import AppLayout from "@/components/AppLayout.vue";
 import { COCTAIL_RANDOM_URL } from "@/constants";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
 const router = useRouter();
 
-const coctail = ref(null)
+const coctail = ref(null);
+
+const swiperBreackpoints = {
+  0: {
+    slidesPerView: 2,
+  },
+  950: {
+    slidesPerView: 3,
+  },
+};
 
 const ingredients = computed(() => {
   const ingredients = [];
 
-  for(let i = 1; i < 16; i++){
-    if(!coctail.value[`strIngredient${i}`]) break;
+  for (let i = 1; i < 16; i++) {
+    if (!coctail.value[`strIngredient${i}`]) break;
 
     const ingredient = {};
     ingredient.name = coctail.value[`strIngredient${i}`];
@@ -22,37 +33,58 @@ const ingredients = computed(() => {
     ingredients.push(ingredient);
   }
 
-  return ingredients
-})
+  return ingredients;
+});
+
+function setIngredientBg(name) {
+  return {
+    backgroundImage: `url(https://www.thecocktaildb.com/images/ingredients/${name.replace(
+      / /g,
+      "%20"
+    )}-Small.png)`,
+  };
+}
 
 async function getCoctail() {
-    const data = await axios.get(COCTAIL_RANDOM_URL)
-    coctail.value = data?.data?.drinks[0];
+  const data = await axios.get(COCTAIL_RANDOM_URL);
+  coctail.value = data?.data?.drinks[0];
 }
 
 function goBack() {
-  router.go(-1)
+  router.go(-1);
 }
 
 getCoctail();
 </script>
 <template>
-  <AppLayout imgName="coctail-bg.jpg" :imgUrl="coctail ? coctail.strDrinkThumb : ''" :backFunc="goBack">
+  <AppLayout
+    imgName="coctail-bg.jpg"
+    :imgUrl="coctail ? coctail.strDrinkThumb : ''"
+    :backFunc="goBack"
+  >
     <div v-if="coctail" class="wrapper container">
-        <div class="title">{{ coctail.strDrink }}</div>
-        <div class="line"></div>
-        <div class="ingredient-list">
-          <div v-for="(ingredient, i) in ingredients" :key="i" class="ingredient">
-            <img src="@/assets/images/heart-icon.svg" alt="icon">
-            <div>{{ ingredient.name }}</div>
+      <div class="title">{{ coctail.strDrink }}</div>
+      <div class="line"></div>
+      <div class="ingredient-list">
+        <swiper :breakpoints="swiperBreackpoints">
+          <swiper-slide
+            class="slide"
+            v-for="(ingredient, i) in ingredients"
+            :key="i"
+          >
+            <div :style="setIngredientBg(ingredient.name)" class="image"></div>
+            <div class="name">
+              {{ ingredient.name }}
+            </div>
             <div v-if="ingredient.measure" class="measure">
               {{ ingredient.measure }}
             </div>
-          </div>
-        </div>
-        <div class="coctail-formula">
-            {{ coctail.strInstructions }}
-        </div>
+          </swiper-slide>
+        </swiper>
+      </div>
+      <div class="coctail-formula">
+        {{ coctail.strInstructions }}
+      </div>
     </div>
   </AppLayout>
 </template>
@@ -65,38 +97,48 @@ getCoctail();
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   max-width: 650px;
   margin: 0 auto;
 }
-
 .ingredient-list {
+  width: 100%;
   padding: 50px 0;
   font-size: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  .ingredient {
+  max-width: 500px;
+
+  .slide {
+    padding: 0 12px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    overflow-x: auto;
-    color: $text-muted;
+    gap: 20px;
 
-    img{
-      margin-right: clamp(10px, 0.316rem + 1.41vw, 22px);
+    .image {
+      width: 100%;
+      aspect-ratio: 1/1;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
-    .measure{
-      position: relative;
-      padding-left: 20px;
 
-      &::after{
-        content: '';
-        position: absolute;
-        width: 1px;
-        height: 100%;
-        top: 0;
-        left: 10px;
-        background: $accent;
-      }
+    .name {
+      text-align: center;
+    }
+
+    .measure {
+        width: max-content;
+        position: inherit;
+        padding-top: 4px;
+
+        &::after{
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            left: 0;
+            top: 0;
+            background-color: $accent;
+        }
     }
   }
 }
