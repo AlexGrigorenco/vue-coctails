@@ -20,7 +20,6 @@ export default {
     },
     backFunc: {
       type: Function,
-      required: true,
     },
     backButtonVisible: {
       type: Boolean,
@@ -70,6 +69,10 @@ export default {
       if(this.routeName === ROUTER_PATH.COCTAIL_RANDOM){
         this.router.go();
       }
+    },
+
+    goBack(){
+      this.backFunc ? this.backFunc() : this.router.go(-1)
     }
   },
 };
@@ -82,7 +85,7 @@ export default {
     </div>
     <div class="main" :class="{ active: mainShow }">
       <div class="buttons-wrapper">
-          <BackButton @click="backFunc" class="back-button" v-if="backButtonVisible"/>
+          <BackButton @click="goBack" class="back-button" v-if="backButtonVisible"/>
 
           <el-button class="bttn" @click="goToCoctailRandom">Get random cocktail</el-button>
         </div>

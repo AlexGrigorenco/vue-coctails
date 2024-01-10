@@ -4,10 +4,7 @@ import { COCTAIL_RANDOM_URL } from "@/constants";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import { computed, ref } from "vue";
-import { useRouter } from "vue-router";
 import axios from "axios";
-
-const router = useRouter();
 
 const coctail = ref(null);
 
@@ -50,17 +47,12 @@ async function getCoctail() {
   coctail.value = data?.data?.drinks[0];
 }
 
-function goBack() {
-  router.go(-1);
-}
-
 getCoctail();
 </script>
 <template>
   <AppLayout
     imgName="coctail-bg.jpg"
     :imgUrl="coctail ? coctail.strDrinkThumb : ''"
-    :backFunc="goBack"
   >
     <div v-if="coctail" class="wrapper container">
       <div class="title">{{ coctail.strDrink }}</div>

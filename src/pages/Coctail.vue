@@ -2,11 +2,10 @@
 import AppLayout from "@/components/AppLayout.vue";
 import { COCTAIL_BY_ID_URL } from "@/constants";
 import { computed, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import axios from "axios";
 
 const route = useRoute();
-const router = useRouter();
 
 const coctail = ref(null)
 const coctailId = computed(() => route.path.split("/").pop());
@@ -32,14 +31,10 @@ async function getCoctail() {
     coctail.value = data?.data?.drinks[0];
 }
 
-function goBack() {
-  router.go(-1)
-}
-
 getCoctail();
 </script>
 <template>
-  <AppLayout imgName="coctail-bg.jpg" :imgUrl="coctail ? coctail.strDrinkThumb : ''" :backFunc="goBack">
+  <AppLayout imgName="coctail-bg.jpg" :imgUrl="coctail ? coctail.strDrinkThumb : ''">
     <div v-if="coctail" class="wrapper container">
         <div class="title">{{ coctail.strDrink }}</div>
         <div class="line"></div>
