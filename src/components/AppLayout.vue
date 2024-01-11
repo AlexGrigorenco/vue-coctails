@@ -1,12 +1,13 @@
 <script>
-import { useRoute, useRouter } from 'vue-router';
-import { ROUTER_PATH } from '@/constants/router';
+import { useRouter } from 'vue-router';
 import BackButton from "./BackButton.vue";
+import NavMenu from "./NavMenu.vue";
 
 export default {
 
   components: {
-    BackButton,
+    BackButton, 
+    NavMenu,
   },
 
   props: {
@@ -34,7 +35,6 @@ export default {
     return {
       imagePath: "",
       mainShow: false,
-      route: useRoute(),
       router: useRouter(),
     };
   },
@@ -46,12 +46,6 @@ export default {
   watch: {
     imgUrl: "setLinkBg",
     imgName: "setBaseBg",
-  },
-
-  computed: {
-    routeName() {
-      return this.route.name
-    }
   },
 
   methods: {
@@ -66,12 +60,6 @@ export default {
       return {
         backgroundImage: `url(${this.imgUrl})`,
       };
-    },
-    goToCoctailRandom(){
-      this.router.push(ROUTER_PATH.COCTAIL_RANDOM);
-      if(this.routeName === ROUTER_PATH.COCTAIL_RANDOM){
-        this.getCoctail();
-      }
     },
 
     goBack(){
@@ -90,7 +78,7 @@ export default {
       <div class="buttons-wrapper">
           <BackButton @click="goBack" class="back-button" v-if="backButtonVisible"/>
 
-          <el-button class="bttn" @click="goToCoctailRandom">Get random cocktail</el-button>
+          <NavMenu class="nav" :getCoctail="getCoctail" />
         </div>
       <div class="slot-wrapper">
         <slot></slot>
@@ -162,26 +150,6 @@ export default {
     &:hover {
       transform: scale(0.95);
       border-color: $accent;
-    }
-  }
-
-  .bttn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 8px 16px;
-    background: $accent;
-    border: none;
-    color: $text;
-    font-family: "Raleway", "Arial", sans-serif;
-    transition: 0.3s linear;
-
-    &:hover {
-      background: darken($accent, 10%);
-    }
-    &:active {
-      transform: scale(0.8);
-      transition: 0;
     }
   }
 }
