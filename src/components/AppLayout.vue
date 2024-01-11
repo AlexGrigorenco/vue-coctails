@@ -113,7 +113,7 @@ export default {
 }
 .base-bg {
   position: relative;
-  flex: 1;
+  width: 50%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
@@ -132,7 +132,7 @@ export default {
 
 .main {
   position: relative;
-  flex: 1;
+  width: 50%;
   padding: 32px 40px;
 }
 .slot-wrapper {
@@ -236,7 +236,11 @@ export default {
     left: 0;
     z-index: 1;
   }
+  .base-bg {
+    width: 100%;
+  }
   .main {
+    width: 100%;
     z-index: 2;
     background: rgba($background, 0.8);
     animation: hideMain 0.6s linear forwards;

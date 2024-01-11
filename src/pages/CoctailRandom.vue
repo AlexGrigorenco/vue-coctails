@@ -10,6 +10,9 @@ const coctail = ref(null);
 
 const swiperBreackpoints = {
   0: {
+    slidesPerView: 1,
+  },
+  400: {
     slidesPerView: 2,
   },
   950: {
