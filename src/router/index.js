@@ -3,6 +3,7 @@ import { ROUTER_PATH } from '@/constants/router'
 import Home from '@/pages/Home.vue'
 import Coctail from '@/pages/Coctail.vue'
 import CoctailRandom from '@/pages/CoctailRandom.vue'
+import Categories from '@/pages/Categories.vue'
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: ROUTER_PATH.COCTAIL_RANDOM,
     name: ROUTER_PATH.COCTAIL_RANDOM,
     component: CoctailRandom
+  },
+  {
+    path: ROUTER_PATH.CATEGORIES,
+    name: ROUTER_PATH.CATEGORIES,
+    component: Categories
   },
 ]
 
