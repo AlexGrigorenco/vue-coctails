@@ -13,11 +13,9 @@ export default {
   props: {
     imgUrl: {
       type: String,
-      required: false,
     },
     imgName: {
       type: String,
-      required: false,
     },
     backFunc: {
       type: Function,

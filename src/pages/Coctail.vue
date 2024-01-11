@@ -50,6 +50,13 @@ getCoctail();
         <div class="coctail-formula">
             {{ coctail.strInstructions }}
         </div>
+        <div class="category">
+          category: 
+          <RouterLink 
+          class="link"
+          :to="`/categories/${coctail.strCategory.replace(' / ', '_').replace(' ', '%20')}`"
+          > {{ coctail.strCategory }}</RouterLink>
+        </div>
     </div>
   </AppLayout>
 </template>
@@ -103,5 +110,20 @@ getCoctail();
   text-align: center;
   font-size: 20px;
   color: $text-muted;
+}
+.category {
+  padding: 10px 0;
+  color: $text-muted;
+  text-align: right;
+
+  .link {
+    display: inline-block;
+    padding-left: 8px;
+    color: $accent;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
 }
 </style>

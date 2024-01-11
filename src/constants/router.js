@@ -3,4 +3,5 @@ export const ROUTER_PATH = {
     COCTAIL: '/coctails/:id',
     COCTAIL_RANDOM: '/coctail-random',
     CATEGORIES: '/categories',
+    COCTAILS_BY_CATEGORY: '/categories/:category',
 }

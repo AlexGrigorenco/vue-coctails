@@ -28,6 +28,9 @@ export default {
         this.getCoctail();
       }
     },
+    goToCategories() {
+      this.router.push(ROUTER_PATH.CATEGORIES);
+    },
   },
 };
 </script>
@@ -38,7 +41,9 @@ export default {
       <el-button class="bttn" @click="goToCoctailRandom"
         >Get random cocktail</el-button
       >
-      <el-button class="bttn">Categories</el-button>
+      <el-button 
+      class="bttn"
+      @click="goToCategories">Categories</el-button>
     </div>
     <div
       class="nav-icon"

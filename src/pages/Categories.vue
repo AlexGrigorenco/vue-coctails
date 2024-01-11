@@ -12,18 +12,20 @@ const { categories } = storeToRefs(rootStore);
 
 <template>
   <AppLayout
-    :imgName="ingredient ? `home-main-img-coctail-choice.jpg` : `home-bg.jpg`"
+    :imgName="`home-bg.jpg`"
   >
     <div class="wrapper container">
       <div v-if="categories">
-        <div class="title">Choose your categorie</div>
+        <div class="title">Choose category</div>
         <div class="line"></div>
         <div class="text">
             From classic cocktails to modern trends, our categories offer a rich selection of drinks for every taste. Explore different styles and discover new flavors crafted by magnificent mixologists.
         </div>
-        <div class="categories-list">
+        <div v-if="categories" class="categories-list">
           <div class="category" v-for="(category, i) in categories" :key="i">
-            {{ category.strCategory }}
+            <RouterLink :to="`/categories/${category.strCategory.replace(' / ', '_').replace(' ', '%20')}`">
+                {{ category.strCategory }}
+            </RouterLink>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import Home from '@/pages/Home.vue'
 import Coctail from '@/pages/Coctail.vue'
 import CoctailRandom from '@/pages/CoctailRandom.vue'
 import Categories from '@/pages/Categories.vue'
+import CoctailsByCategory from '@/pages/CoctailsByCategory.vue'
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: ROUTER_PATH.CATEGORIES,
     name: ROUTER_PATH.CATEGORIES,
     component: Categories
+  },
+  {
+    path: ROUTER_PATH.COCTAILS_BY_CATEGORY,
+    name: ROUTER_PATH.COCTAILS_BY_CATEGORY,
+    component: CoctailsByCategory
   },
 ]
 
