@@ -53,6 +53,7 @@ getCoctail();
   <AppLayout
     imgName="coctail-bg.jpg"
     :imgUrl="coctail ? coctail.strDrinkThumb : ''"
+    :getCoctail="getCoctail"
   >
     <div v-if="coctail" class="wrapper container">
       <div class="title">{{ coctail.strDrink }}</div>
