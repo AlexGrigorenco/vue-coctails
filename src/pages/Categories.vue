@@ -12,7 +12,7 @@ const { categories } = storeToRefs(rootStore);
 
 <template>
   <AppLayout
-    :imgName="`home-bg.jpg`"
+    :imgName="`coctail-bg.jpg`"
   >
     <div class="wrapper container">
       <div v-if="categories">

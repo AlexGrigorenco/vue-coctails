@@ -80,6 +80,13 @@ getCoctail();
       </div>
       <div class="coctail-formula">
         {{ coctail.strInstructions }}
+        <div class="alcoholic">
+              This is 
+              <RouterLink class="link"
+              :to="`/alcoholic/${coctail.strAlcoholic.replace(' ', '_')}`"
+              >{{ coctail.strAlcoholic }}</RouterLink>
+              coctail
+            </div>
       </div>
       <div class="category">
           category: 
@@ -151,6 +158,20 @@ getCoctail();
   text-align: center;
   font-size: 20px;
   color: $text-muted;
+  .alcoholic {
+    text-align: right;
+    padding-top: 10px;
+
+    .link{
+      color: $accent;
+      display: inline-block;
+      transition: .3s linear;
+
+      &:hover{
+        transform: scale(1.05);
+      }
+    }
+  }
 }
 .category {
   padding: 10px 0;
@@ -161,6 +182,7 @@ getCoctail();
     display: inline-block;
     padding-left: 8px;
     color: $accent;
+    transition: .3s linear;
 
     &:hover {
       transform: scale(1.1);

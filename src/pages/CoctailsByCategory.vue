@@ -44,16 +44,11 @@ watch(() => route.path, (newPath) => {
 </script>
 
 <template>
-  <AppLayout :imgName="`home-bg.jpg`">
+  <AppLayout :imgName="`coctail-bg.jpg`">
     <div class="wrapper container">
       <div v-if="categories">
         <div class="title">{{ categoryPathName }}</div>
         <div class="line"></div>
-        <div class="text">
-          From classic cocktails to modern trends, our categories offer a rich
-          selection of drinks for every taste. Explore different styles and
-          discover new flavors crafted by magnificent mixologists.
-        </div>
         <div class="categories-list">
           <div class="category" v-for="category in categories" :key="category"
             :class="{ active: categoryActive(category.strCategory) }">
@@ -87,17 +82,8 @@ watch(() => route.path, (newPath) => {
   }
 }
 
-.text {
-  padding: 60px 0;
-  color: $text-muted;
-  text-align: center;
-  max-width: 516px;
-  line-height: 36px;
-  letter-spacing: 1.6px;
-  font-weight: 400;
-}
-
 .categories-list {
+  padding-top: 50px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
