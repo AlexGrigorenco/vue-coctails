@@ -31,6 +31,12 @@ export default {
     goToCategories() {
       this.router.push(ROUTER_PATH.CATEGORIES);
     },
+    goToIngredients() {
+      this.router.push(ROUTER_PATH.INGREDIENTS);
+    },
+    goHome() {
+      this.router.push(ROUTER_PATH.HOME);
+    },
   },
 };
 </script>
@@ -43,7 +49,13 @@ export default {
       >
       <el-button 
       class="bttn"
+      @click="goToIngredients">Ingredients</el-button>
+      <el-button 
+      class="bttn"
       @click="goToCategories">Categories</el-button>
+      <el-button 
+      class="bttn"
+      @click="goHome">Home</el-button>
     </div>
     <div
       class="nav-icon"

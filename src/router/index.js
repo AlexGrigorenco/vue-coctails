@@ -6,6 +6,7 @@ import CoctailRandom from '@/pages/CoctailRandom.vue'
 import Categories from '@/pages/Categories.vue'
 import CoctailsByCategory from '@/pages/CoctailsByCategory.vue'
 import AlcoholicSort from '@/pages/AlcoholicSort.vue'
+import IngredientsPage from '@/pages/IngredientsPage.vue'
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: ROUTER_PATH.COCTAILS_SORT_BY_ALCOHOL,
     name: ROUTER_PATH.COCTAILS_SORT_BY_ALCOHOL,
     component: AlcoholicSort
+  },
+  {
+    path: ROUTER_PATH.INGREDIENTS,
+    name: ROUTER_PATH.INGREDIENTS,
+    component: IngredientsPage
   },
 ]
 
