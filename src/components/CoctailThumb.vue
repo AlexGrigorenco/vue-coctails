@@ -48,6 +48,7 @@ export default {
     background-size: cover;
 }
 .name{
+    text-align: center;
     transition: .3s linear;
     &:hover {
         color: $accent;

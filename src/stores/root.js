@@ -24,7 +24,6 @@ export const useRootStore = defineStore('root', {
         async getCategories() {
             const data = await axios.get(CATEGORIES_URL);
             this.categories = data?.data?.drinks
-        },
-        
+        }
     }
 })
