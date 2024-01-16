@@ -2,7 +2,8 @@
 import AppLayout from "@/components/AppLayout.vue";
 import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
-import { computed, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { computed, ref, onMounted, watchEffect } from "vue";
 import CoctailsList from "@/components/CoctailsList.vue";
 import axios from "axios";
 import { COCTAILS_BY_INGREGIENT_URL } from '@/constants'
@@ -10,9 +11,17 @@ import { COCTAILS_BY_INGREGIENT_URL } from '@/constants'
 const rootStore = useRootStore();
 rootStore.getIngredients();
 
+const route = useRoute();
+const router = useRouter()
+
 const { ingredients } = storeToRefs(rootStore);
 
-const ingredientList = ref([])
+const ingredientList = computed(() => {
+    if(route.path.split('/').pop() === 'null'){
+        return []
+    }
+    return route.path.split('/').pop().replace('%20', ' ').split('_');
+})
 
 const coctailsListObj = ref({})
 
@@ -32,13 +41,21 @@ const coctailsListSorted = computed(() => {
 
 async function setIngredient(name) {
     const index = ingredientList.value.indexOf(name);
-
     if (index === -1) {
         ingredientList.value.push(name)
-        await getCoctailsByIngredient(name)
+        router.push(ingredientList.value.join('_'))
     } else {
         ingredientList.value.splice(index, 1)
-        delete coctailsListObj.value[name]
+        ingredientList.value.length  ?  router.push(ingredientList.value.join('_')) : router.push('null')
+    }
+}
+
+async function fetchData() {
+    if(ingredientList.value.length === 0){
+        return
+    }
+    for (const ingredient of ingredientList.value) {
+        await getCoctailsByIngredient(ingredient);
     }
 }
 
@@ -52,9 +69,16 @@ function ingredientIsActive(name) {
 }
 
 function clean() {
-    ingredientList.value = [];
-    coctailsListObj.value = {};
+    coctailsListObj.value = {}
+    router.push('null')
 }
+
+onMounted(() => {
+    fetchData();
+});
+watchEffect(() => {
+    fetchData();
+});
 </script>
 
 

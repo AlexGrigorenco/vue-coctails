@@ -1,6 +1,7 @@
 <script>
 import { useRoute, useRouter } from "vue-router";
 import { ROUTER_PATH } from "@/constants/router";
+import { useRootStore } from "@/stores/root";
 
 export default {
   props: {
@@ -32,9 +33,10 @@ export default {
       this.router.push(ROUTER_PATH.CATEGORIES);
     },
     goToIngredients() {
-      this.router.push(`ingredients/null`);
+      this.routeName.split('/')[1] === 'ingredients' ? this.router.push(`null`) : this.router.push(`/ingredients/null`);
     },
     goHome() {
+      useRootStore().setIngredient(null)
       this.router.push(ROUTER_PATH.HOME);
     },
   },
