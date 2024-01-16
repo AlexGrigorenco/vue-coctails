@@ -32,7 +32,7 @@ export default {
       this.router.push(ROUTER_PATH.CATEGORIES);
     },
     goToIngredients() {
-      this.router.push(ROUTER_PATH.INGREDIENTS);
+      this.router.push(`ingredients/null`);
     },
     goHome() {
       this.router.push(ROUTER_PATH.HOME);
