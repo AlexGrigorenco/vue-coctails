@@ -7,7 +7,7 @@ export const useRootStore = defineStore('root', {
         ingredients: [],
         ingredient: null,
         coctails: [],
-        categories: [],
+        categories: []
     }),
     actions: {
         async getIngredients() {

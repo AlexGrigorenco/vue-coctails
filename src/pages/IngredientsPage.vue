@@ -67,8 +67,8 @@ function clean() {
                     <span v-for="ingredientName in ingredientList" :key="ingredientName">
                         {{ ingredientName }} <span>/ </span>
                     </span>
-                    <div @click="clean" class="clean">clean</div>
                 </div>
+                <div v-if="ingredientList.length" @click="clean" class="clean">clean</div>
                 <div class="line"></div>
 
                 <div v-if="!ingredientList.length" class="text">
@@ -79,6 +79,9 @@ function clean() {
                 </div>
                 <div v-if="coctailsListSorted.length" class="coctails-wrapper">
                     <CoctailsList :list="coctailsListSorted" class="list" />
+                </div>
+                <div v-if="!coctailsListSorted.length && ingredientList.length" class="text">
+                    No cocktails with these ingredients
                 </div>
                 <div class="ingredients-wrapper">
                     <div v-for="ingredient in ingredients" :key="ingredient" class="ingredients-item"
@@ -129,10 +132,10 @@ function clean() {
     span:last-child span {
         display: none;
     }
-
-    .clean {
+}
+.clean {
         cursor: pointer;
-        padding-top: 14px;
+        padding: 14px 0;
         font-size: 20px;
         color: $accent;
         transition: .2s linear;
@@ -141,8 +144,6 @@ function clean() {
             transform: translateY(-2px);
         }
     }
-}
-
 .text {
     padding: 30px 0 10px 0;
     color: $text-muted;
