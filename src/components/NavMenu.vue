@@ -28,16 +28,20 @@ export default {
       if (this.routeName === ROUTER_PATH.COCTAIL_RANDOM) {
         this.getCoctail();
       }
+      this.menuIsActive = false;
     },
     goToCategories() {
       this.router.push(ROUTER_PATH.CATEGORIES);
+      this.menuIsActive = false;
     },
     goToIngredients() {
       this.routeName.split('/')[1] === 'ingredients' ? this.router.push(`null`) : this.router.push(`/ingredients/null`);
+      this.menuIsActive = false;
     },
     goHome() {
       useRootStore().setIngredient(null)
       this.router.push(ROUTER_PATH.HOME);
+      this.menuIsActive = false;
     },
   },
 };

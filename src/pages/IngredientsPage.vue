@@ -3,8 +3,8 @@ import AppLayout from "@/components/AppLayout.vue";
 import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
-import { computed, ref, onMounted, watchEffect } from "vue";
-import CoctailsList from "@/components/CoctailsList.vue";
+import { computed, ref, onMounted, watch } from "vue";
+import coctailsList from "@/components/CoctailsList.vue";
 import axios from "axios";
 import { COCTAILS_BY_INGREGIENT_URL } from '@/constants'
 
@@ -20,23 +20,25 @@ const ingredientList = computed(() => {
     if(route.path.split('/').pop() === 'null'){
         return []
     }
-    return route.path.split('/').pop().replace('%20', ' ').split('_');
+    return route.path.split('/').pop().replace(/%20/g, " ").split('_');
 })
 
-const coctailsListObj = ref({})
+const coctailsLists = ref([])
 
 const coctailsListSorted = computed(() => {
-    const arrays = Object.values(coctailsListObj.value)
-    if (arrays.length === 1) {
-        return arrays[0]
-    }
-    if (arrays.length === 0) {
+
+    if (coctailsLists.value.length === 0) {
         return []
     }
-    const commonObjects = arrays.reduce((common, array) =>
+    
+    if (coctailsLists.value.length === 1) {
+        return coctailsLists.value[0]
+    }
+    
+    return coctailsLists.value.reduce((common, array) =>
         common.filter(obj1 => array.some(obj2 => obj2.idDrink === obj1.idDrink))
     );
-    return commonObjects
+     
 })
 
 async function setIngredient(name) {
@@ -48,10 +50,12 @@ async function setIngredient(name) {
         ingredientList.value.splice(index, 1)
         ingredientList.value.length  ?  router.push(ingredientList.value.join('_')) : router.push('null')
     }
+    fetchData()
 }
 
 async function fetchData() {
-    if(ingredientList.value.length === 0){
+    coctailsLists.value = []
+    if(route.path.split('/').pop() === 'null'){
         return
     }
     for (const ingredient of ingredientList.value) {
@@ -61,7 +65,7 @@ async function fetchData() {
 
 async function getCoctailsByIngredient(ingredient) {
     const data = await axios.get(`${COCTAILS_BY_INGREGIENT_URL}${ingredient}`);
-    coctailsListObj.value[`${ingredient}`] = (data?.data?.drinks);
+    coctailsLists.value.push(data?.data?.drinks);
 }
 
 function ingredientIsActive(name) {
@@ -69,14 +73,14 @@ function ingredientIsActive(name) {
 }
 
 function clean() {
-    coctailsListObj.value = {}
     router.push('null')
 }
 
-onMounted(() => {
+watch(ingredientList, () => {
     fetchData();
-});
-watchEffect(() => {
+})
+
+onMounted(() => {
     fetchData();
 });
 </script>
@@ -102,7 +106,7 @@ watchEffect(() => {
                     on your culinary adventure!
                 </div>
                 <div v-if="coctailsListSorted.length" class="coctails-wrapper">
-                    <CoctailsList :list="coctailsListSorted" class="list" />
+                    <coctailsList :list="coctailsListSorted" class="list" />
                 </div>
                 <div v-if="!coctailsListSorted.length && ingredientList.length" class="text">
                     No cocktails with these ingredients
