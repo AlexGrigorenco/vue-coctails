@@ -30,6 +30,9 @@ export default {
       }
       this.menuIsActive = false;
     },
+    goToFavorites(){
+      this.router.push(`/favorites`)
+    },
     goToCategories() {
       this.router.push(ROUTER_PATH.CATEGORIES);
       this.menuIsActive = false;
@@ -53,6 +56,9 @@ export default {
       <el-button class="bttn" @click="goToCoctailRandom"
         >Get random cocktail</el-button
       >
+      <el-button 
+      class="bttn"
+      @click="goToFavorites">Favorites</el-button>
       <el-button 
       class="bttn"
       @click="goToIngredients">Ingredients</el-button>
