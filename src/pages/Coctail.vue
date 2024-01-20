@@ -4,6 +4,7 @@ import { COCTAIL_BY_ID_URL } from "@/constants";
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
+import FavoritesButton from "@/components/FavoritesButton.vue";
 
 const route = useRoute();
 
@@ -36,7 +37,7 @@ getCoctail();
 <template>
   <AppLayout imgName="coctail-bg.jpg" :imgUrl="coctail ? coctail.strDrinkThumb : ''">
     <div v-if="coctail" class="wrapper container">
-        <div class="title">{{ coctail.strDrink }}</div>
+        <div class="title">{{ coctail.strDrink }} <FavoritesButton/></div>
         <div class="line"></div>
         <div class="ingredient-list">
           <div v-for="(ingredient, i) in ingredients" :key="i" class="ingredient">

@@ -1,6 +1,20 @@
 <script setup>
 import AppLayout from "@/components/AppLayout.vue";
 
+function getFavorites(){
+    // Попытка получить значение из localStorage по ключу "myKey"
+const myData = localStorage.getItem("myKey");
+
+// Проверка, есть ли значение
+if (myData) {
+  // Ваш код для работы с данными
+  console.log("Данные из localStorage:", myData);
+} else {
+  console.log("Нет данных в localStorage для ключа 'myKey'");
+}
+
+}
+getFavorites()
 </script>
 
 <template>
@@ -12,7 +26,7 @@ import AppLayout from "@/components/AppLayout.vue";
         <div class="title">favorites</div>
         <div class="line"></div>
         <div class="text">
-            favorites
+            Welcome to the Favorites section! Here, you'll find the cocktails that have captured your taste. Enjoy the exquisite blends of your favorite drinks all in one place
         </div>
       </div>
     </div>
@@ -46,38 +60,4 @@ import AppLayout from "@/components/AppLayout.vue";
   font-weight: 400;
 }
 
-.categories-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-
-  .category{
-    cursor: pointer;
-    padding: 8px 4px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid $text-muted;
-    border-radius: 8px;
-    transition: .3s linear;
-
-    &:hover {
-        color: $text;
-        border-color: $accent;
-        transform: scale(1.1);
-    }
-  }
-}
-@media (max-width: 900px) {
-    .categories-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 450px) {
-    .categories-list {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
 </style>

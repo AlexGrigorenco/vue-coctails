@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import { computed, ref } from "vue";
 import axios from "axios";
+import FavoritesButton from "@/components/FavoritesButton.vue";
 
 const coctail = ref(null);
 
@@ -59,7 +60,7 @@ getCoctail();
     :getCoctail="getCoctail"
   >
     <div v-if="coctail" class="wrapper container">
-      <div class="title">{{ coctail.strDrink }}</div>
+      <div class="title">{{ coctail.strDrink }} <FavoritesButton/></div>
       <div class="line"></div>
       <div class="ingredient-list">
         <swiper :breakpoints="swiperBreackpoints">
