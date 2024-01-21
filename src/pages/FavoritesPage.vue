@@ -1,32 +1,28 @@
 <script setup>
 import AppLayout from "@/components/AppLayout.vue";
+import { useRootStore } from "@/stores/root";
+import { storeToRefs } from "pinia";
 
-function getFavorites(){
-    // Попытка получить значение из localStorage по ключу "myKey"
-const myData = localStorage.getItem("myKey");
+const rootStore = useRootStore();
+rootStore.getFavorites();
 
-// Проверка, есть ли значение
-if (myData) {
-  // Ваш код для работы с данными
-  console.log("Данные из localStorage:", myData);
-} else {
-  console.log("Нет данных в localStorage для ключа 'myKey'");
-}
-
-}
-getFavorites()
+const { favorites } = storeToRefs(rootStore);
 </script>
 
 <template>
-  <AppLayout
-    :imgName="`coctail-bg.jpg`"
-  >
+  <AppLayout :imgName="`coctail-bg.jpg`">
     <div class="wrapper container">
       <div>
         <div class="title">favorites</div>
         <div class="line"></div>
         <div class="text">
-            Welcome to the Favorites section! Here, you'll find the cocktails that have captured your taste. Enjoy the exquisite blends of your favorite drinks all in one place
+          Welcome to the Favorites section! Here, you'll find the cocktails that
+          have captured your taste. Enjoy the exquisite blends of your favorite
+          drinks all in one place
+        </div>
+
+        <div>
+          {{ favorites }}
         </div>
       </div>
     </div>
@@ -59,5 +55,4 @@ getFavorites()
   letter-spacing: 1.6px;
   font-weight: 400;
 }
-
 </style>

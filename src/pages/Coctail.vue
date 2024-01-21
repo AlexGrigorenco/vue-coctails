@@ -27,6 +27,14 @@ const ingredients = computed(() => {
   return ingredients
 })
 
+const coctailData = computed(() => {
+  return {
+    idDrink: coctail.value.idDrink,
+    strDrink: coctail.value.strDrink,
+    strDrinkThumb: coctail.value.strDrinkThumb
+  }
+})
+
 async function getCoctail() {
     const data = await axios.get(`${COCTAIL_BY_ID_URL}${coctailId.value}`)
     coctail.value = data?.data?.drinks[0];
@@ -37,7 +45,7 @@ getCoctail();
 <template>
   <AppLayout imgName="coctail-bg.jpg" :imgUrl="coctail ? coctail.strDrinkThumb : ''">
     <div v-if="coctail" class="wrapper container">
-        <div class="title">{{ coctail.strDrink }} <FavoritesButton/></div>
+        <div class="title">{{ coctail.strDrink }} <FavoritesButton :coctailData="coctailData"/></div>
         <div class="line"></div>
         <div class="ingredient-list">
           <div v-for="(ingredient, i) in ingredients" :key="i" class="ingredient">

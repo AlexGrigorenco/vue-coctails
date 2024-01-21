@@ -37,6 +37,14 @@ const ingredients = computed(() => {
   return ingredients;
 });
 
+const coctailData = computed(() => {
+  return {
+    idDrink: coctail.value.idDrink,
+    strDrink: coctail.value.strDrink,
+    strDrinkThumb: coctail.value.strDrinkThumb
+  }
+})
+
 function setIngredientBg(name) {
   return {
     backgroundImage: `url(https://www.thecocktaildb.com/images/ingredients/${name.replace(
@@ -60,7 +68,7 @@ getCoctail();
     :getCoctail="getCoctail"
   >
     <div v-if="coctail" class="wrapper container">
-      <div class="title">{{ coctail.strDrink }} <FavoritesButton/></div>
+      <div class="title">{{ coctail.strDrink }} <FavoritesButton :coctailData="coctailData"/></div>
       <div class="line"></div>
       <div class="ingredient-list">
         <swiper :breakpoints="swiperBreackpoints">

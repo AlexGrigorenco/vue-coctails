@@ -2,6 +2,7 @@
 import { useRoute, useRouter } from "vue-router";
 import { ROUTER_PATH } from "@/constants/router";
 import { useRootStore } from "@/stores/root";
+import { storeToRefs } from "pinia";
 
 export default {
   props: {
@@ -16,6 +17,16 @@ export default {
       route: useRoute(),
       router: useRouter(),
     };
+  },
+  setup() {
+    const rootStore = useRootStore();
+    rootStore.getFavorites()
+
+    const { favorites } = storeToRefs(rootStore);
+
+    return{
+        favorites
+    }
   },
   computed: {
     routeName() {
@@ -57,6 +68,7 @@ export default {
         >Get random cocktail</el-button
       >
       <el-button 
+      v-if="favorites.length"
       class="bttn"
       @click="goToFavorites">Favorites</el-button>
       <el-button 
