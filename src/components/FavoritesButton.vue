@@ -7,6 +7,10 @@ export default {
       type: Object,
       required: true,
     },
+    isFavorites: {
+      type: Boolean,
+      default: false,
+    }
   },
   setup(props) {
     const rootStore = useRootStore();
@@ -33,7 +37,7 @@ export default {
       height="800px"
       viewBox="-5.79 0 138.71 138.71"
       xmlns="http://www.w3.org/2000/svg"
-      class=""
+      :class="{active: isFavorites}"
     >
       <path
         class="stroke"

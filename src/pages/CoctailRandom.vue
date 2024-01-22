@@ -6,6 +6,12 @@ import "swiper/css";
 import { computed, ref } from "vue";
 import axios from "axios";
 import FavoritesButton from "@/components/FavoritesButton.vue";
+import { useRootStore } from "@/stores/root";
+import { storeToRefs } from "pinia";
+
+const rootStore = useRootStore();
+
+const { favorites } = storeToRefs(rootStore);
 
 const coctail = ref(null);
 
@@ -36,6 +42,10 @@ const ingredients = computed(() => {
 
   return ingredients;
 });
+
+const cocktailId = computed(() => {
+  return coctail.value.idDrink
+})
 
 const coctailData = computed(() => {
   return {
@@ -68,7 +78,7 @@ getCoctail();
     :getCoctail="getCoctail"
   >
     <div v-if="coctail" class="wrapper container">
-      <div class="title">{{ coctail.strDrink }} <FavoritesButton :coctailData="coctailData"/></div>
+      <div class="title">{{ coctail.strDrink }} <FavoritesButton :coctailData="coctailData" :isFavorites="Object.keys(favorites).includes(cocktailId)"/></div>
       <div class="line"></div>
       <div class="ingredient-list">
         <swiper :breakpoints="swiperBreackpoints">

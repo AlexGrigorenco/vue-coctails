@@ -2,11 +2,28 @@
 import AppLayout from "@/components/AppLayout.vue";
 import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
+import { computed } from "vue";
+import CoctailsList from "@/components/CoctailsList.vue";
 
 const rootStore = useRootStore();
 rootStore.getFavorites();
 
 const { favorites } = storeToRefs(rootStore);
+
+const cocktails = computed(() => {
+  const cocktailsArray = [];
+
+  Object.keys(favorites.value).forEach((key) => {
+    const cocktail = favorites.value[key];
+    cocktailsArray.push({
+      idDrink: key,
+      strDrink: cocktail.strDrink,
+      strDrinkThumb: cocktail.strDrinkThumb,
+    });
+  });
+
+  return cocktailsArray;
+});
 </script>
 
 <template>
@@ -20,10 +37,7 @@ const { favorites } = storeToRefs(rootStore);
           have captured your taste. Enjoy the exquisite blends of your favorite
           drinks all in one place
         </div>
-
-        <div>
-          {{ favorites }}
-        </div>
+        <CoctailsList v-if="cocktails" :list="cocktails"/>
       </div>
     </div>
   </AppLayout>

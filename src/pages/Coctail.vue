@@ -5,6 +5,12 @@ import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import FavoritesButton from "@/components/FavoritesButton.vue";
+import { useRootStore } from "@/stores/root";
+import { storeToRefs } from "pinia";
+
+const rootStore = useRootStore();
+
+const { favorites } = storeToRefs(rootStore);
 
 const route = useRoute();
 
@@ -45,7 +51,7 @@ getCoctail();
 <template>
   <AppLayout imgName="coctail-bg.jpg" :imgUrl="coctail ? coctail.strDrinkThumb : ''">
     <div v-if="coctail" class="wrapper container">
-        <div class="title">{{ coctail.strDrink }} <FavoritesButton :coctailData="coctailData"/></div>
+        <div class="title">{{ coctail.strDrink }} <FavoritesButton :coctailData="coctailData" :isFavorites="Object.keys(favorites).includes(coctailId)"/></div>
         <div class="line"></div>
         <div class="ingredient-list">
           <div v-for="(ingredient, i) in ingredients" :key="i" class="ingredient">
