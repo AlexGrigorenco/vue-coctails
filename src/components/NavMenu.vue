@@ -68,7 +68,7 @@ export default {
         >Get random cocktail</el-button
       >
       <el-button 
-      v-if="favorites.length"
+      :class="{empty: !Object.keys(favorites).length}"
       class="bttn"
       @click="goToFavorites">Favorites</el-button>
       <el-button 
@@ -132,6 +132,10 @@ export default {
     font-family: "Raleway", "Arial", sans-serif;
     transition: 0.3s linear;
     margin: 0;
+
+    &.empty{
+      opacity: .5;
+    }
 
     &:hover {
       background: darken($accent, 10%);

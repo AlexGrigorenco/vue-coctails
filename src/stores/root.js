@@ -12,7 +12,7 @@ export const useRootStore = defineStore("root", {
     ingredient: null,
     coctails: [],
     categories: [],
-    favorites: [],
+    favorites: {},
   }),
   actions: {
     async getIngredients() {
@@ -40,7 +40,17 @@ export const useRootStore = defineStore("root", {
       }
     },
     addToFavorites(coctailData){
-        this.favorites.push(coctailData);
+        const keys = Object.keys(this.favorites);
+        if(keys){
+          if(keys.includes(coctailData.idDrink)){
+            delete this.favorites[`${coctailData.idDrink}`];
+          }else{
+            this.favorites[`${coctailData.idDrink}`] = {
+              strDrink: coctailData.strDrink,
+              strDrinkThumb: coctailData.strDrinkThumb
+            }
+          }
+        }
         localStorage.setItem("favorites", JSON.stringify(this.favorites));
     }
   },
