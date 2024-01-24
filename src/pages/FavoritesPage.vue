@@ -24,6 +24,11 @@ const cocktails = computed(() => {
 
   return cocktailsArray;
 });
+
+function clearFavorites(){
+  localStorage.setItem("favorites", JSON.stringify({}));
+  rootStore.getFavorites();
+}
 </script>
 
 <template>
@@ -35,9 +40,17 @@ const cocktails = computed(() => {
         <div class="text">
           Welcome to the Favorites section! Here, you'll find the cocktails that
           have captured your taste. Enjoy the exquisite blends of your favorite
-          drinks all in one place
+          drinks all in one place <br>
+          <div v-if="!cocktails.length">
+          Your list of favorite cocktails is empty. To add a cocktail to your favorites, click the heart icon on the cocktail page
         </div>
-        <CoctailsList v-if="cocktails" :list="cocktails"/>
+        </div>
+        
+        <CoctailsList v-if="cocktails.length" :list="cocktails" />
+        <div v-if="cocktails.length" class="clear-button-wrapper">
+          <el-button class="bttn" @click="clearFavorites"
+            >Clear favorites</el-button>
+        </div>
       </div>
     </div>
   </AppLayout>
@@ -69,4 +82,27 @@ const cocktails = computed(() => {
   letter-spacing: 1.6px;
   font-weight: 400;
 }
+
+.clear-button-wrapper{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.bttn {
+    padding: 8px 16px;
+    background: $accent;
+    border: none;
+    color: $text;
+    font-family: "Raleway", "Arial", sans-serif;
+    transition: 0.3s linear;
+    margin: 0;
+
+    &:hover {
+      background: darken($accent, 10%);
+    }
+    &:active {
+      transform: scale(0.8);
+      transition: 0;
+    }
+  }
 </style>
