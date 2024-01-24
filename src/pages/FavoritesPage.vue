@@ -4,6 +4,7 @@ import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import CoctailsList from "@/components/CoctailsList.vue";
+import FavoritesIcon from "@/components/FavoritesIcon.vue";
 
 const rootStore = useRootStore();
 rootStore.getFavorites();
@@ -40,9 +41,9 @@ function clearFavorites(){
         <div class="text">
           Welcome to the Favorites section! Here, you'll find the cocktails that
           have captured your taste. Enjoy the exquisite blends of your favorite
-          drinks all in one place <br>
+          drinks all in one place <br> <br>
           <div v-if="!cocktails.length">
-          Your list of favorite cocktails is empty. To add a cocktail to your favorites, click the heart icon on the cocktail page
+          Your list of favorite cocktails is empty. To add a cocktail to your favorites, click the <FavoritesIcon /> on the cocktail page
         </div>
         </div>
         
@@ -84,6 +85,7 @@ function clearFavorites(){
 }
 
 .clear-button-wrapper{
+  padding-top: 20px;
   width: 100%;
   display: flex;
   justify-content: flex-end;

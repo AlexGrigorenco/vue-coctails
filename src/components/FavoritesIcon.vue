@@ -1,43 +1,13 @@
 <script>
-import { useRootStore } from "@/stores/root";
-import { storeToRefs } from "pinia";
-export default {
-  props: {
-    coctailData: {
-      type: Object,
-      required: true,
-    },
-    isFavorites: {
-      type: Boolean,
-      default: false,
-    }
-  },
-  setup(props) {
-    const rootStore = useRootStore();
-    rootStore.getFavorites()
-
-    const { favorites } = storeToRefs(rootStore);
-
-    function addToFavorites(){
-        rootStore.addToFavorites(props.coctailData)
-    }
-
-    return{
-        favorites,
-        addToFavorites
-    }
-  },
-};
 </script>
 
 <template>
-  <span class="svg-wrapper" title="add to favorites" @click="addToFavorites">
+  <span class="svg-wrapper" title="add to favorites">
     <svg
       width="800px"
       height="800px"
       viewBox="-5.79 0 138.71 138.71"
       xmlns="http://www.w3.org/2000/svg"
-      :class="{active: isFavorites}"
     >
       <path
         class="stroke"
@@ -64,6 +34,15 @@ export default {
     transform: scale(1.1);
     transition: 0.4s linear;
   }
+
+  &:active{
+    transform: scale(8);
+  }
+  &.active {
+    svg{
+        fill: $accent;
+    }
+  }
 }
 
 svg {
@@ -71,10 +50,6 @@ svg {
   stroke: $accent;
   width: 100%;
   height: 100%;
-
-  &.active {
-    fill: $accent;
-  }
 
   .stroke {
     fill: $accent;
