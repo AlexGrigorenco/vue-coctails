@@ -3,12 +3,13 @@ import AppLayout from "@/components/AppLayout.vue";
 import { COCTAIL_RANDOM_URL } from "@/constants";
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide, } from "swiper/vue";
-import "swiper/css";
+import "swiper/scss";
 import { computed, ref } from "vue";
 import axios from "axios";
 import FavoritesButton from "@/components/FavoritesButton.vue";
 import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
+import IconArrowSvg from "@/components/IconArrowSvg.vue";
 
 const rootStore = useRootStore();
 
@@ -86,7 +87,11 @@ getCoctail();
         <swiper 
         :modules="[Navigation]"
         :breakpoints="swiperBreackpoints"
-        navigation>
+        :navigation="{
+          enabled: true,
+          prevEl: '.prev',
+          nextEl: '.next',
+        }">
           <swiper-slide
             class="slide"
             v-for="(ingredient, i) in ingredients"
@@ -101,6 +106,8 @@ getCoctail();
             </div>
           </swiper-slide>
         </swiper>
+        <div class="prev slider-button"><IconArrowSvg/></div>
+        <div class="next slider-button"><IconArrowSvg/></div>
       </div>
       <div class="coctail-formula">
         {{ coctail.strInstructions }}
@@ -136,17 +143,46 @@ getCoctail();
   margin: 0 auto;
 }
 
-.swiper-button-next{
-  width: 20px;
-    height: 20px;
-    color: red !important;
-}
-  .swiper-button-prev{
-    width: 20px;
-    height: 20px;
-    color: red !important;;
+.slider-button{
+  cursor: pointer;
+  height: 60px;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  svg{
+    fill: $accent;
+    width: 100%;
+    height: 100%;
   }
+
+  &.prev{
+    left: 0;
+  }
+
+  &.next{
+    right: 0;
+
+    svg{
+      transform: rotate(180deg);
+    }
+  }
+  &.swiper-button-disabled{
+    opacity: .3;
+
+    svg{
+      fill: $text-muted;
+    }
+  }
+  &.swiper-button-lock{
+    display: none;
+    pointer-events: none;
+  }
+}
 .ingredient-list {
+  position: relative;
   width: 100%;
   padding: 50px 0;
   font-size: 18px;
