@@ -1,7 +1,8 @@
 <script setup>
 import AppLayout from "@/components/AppLayout.vue";
 import { COCTAIL_RANDOM_URL } from "@/constants";
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide, } from "swiper/vue";
 import "swiper/css";
 import { computed, ref } from "vue";
 import axios from "axios";
@@ -64,6 +65,7 @@ function setIngredientBg(name) {
   };
 }
 
+
 async function getCoctail() {
   const data = await axios.get(COCTAIL_RANDOM_URL);
   coctail.value = data?.data?.drinks[0];
@@ -81,7 +83,10 @@ getCoctail();
       <div class="title">{{ coctail.strDrink }} <FavoritesButton :coctailData="coctailData" :isFavorites="Object.keys(favorites).includes(cocktailId)"/></div>
       <div class="line"></div>
       <div class="ingredient-list">
-        <swiper :breakpoints="swiperBreackpoints">
+        <swiper 
+        :modules="[Navigation]"
+        :breakpoints="swiperBreackpoints"
+        navigation>
           <swiper-slide
             class="slide"
             v-for="(ingredient, i) in ingredients"
@@ -130,6 +135,17 @@ getCoctail();
   max-width: 650px;
   margin: 0 auto;
 }
+
+.swiper-button-next{
+  width: 20px;
+    height: 20px;
+    color: red !important;
+}
+  .swiper-button-prev{
+    width: 20px;
+    height: 20px;
+    color: red !important;;
+  }
 .ingredient-list {
   width: 100%;
   padding: 50px 0;
