@@ -5,21 +5,13 @@ export default {
             type: Object,
             required: true
         }
-    },
-
-    methods: {
-        setBgImage() {
-            return {
-                backgroundImage: `url(${this.coctail.strDrinkThumb})`
-            }
-        }
     }
 }
 </script>
 
 <template>
   <RouterLink :to="`/coctails/${coctail.idDrink}`" class="root">
-    <div class="img" :style="setBgImage()"></div>
+    <div class="img"><img :src="coctail.strDrinkThumb" loading="lazy" alt="image"></div>
     <div class="name">
         {{ coctail.strDrink }}
     </div>
@@ -46,6 +38,12 @@ export default {
     width: 80%;
     aspect-ratio: 1/1;
     background-size: cover;
+
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 .name{
     text-align: center;
