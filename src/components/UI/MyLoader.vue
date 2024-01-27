@@ -1,7 +1,4 @@
-<script>
-export default {
-        name: 'my-loader',
-    }
+<script setup>
 </script>
 <template>
     <div class="loader-wrapper"><span class="loader"> </span></div>

@@ -68,6 +68,7 @@ function setIngredientBg(name) {
 
 
 async function getCoctail() {
+  coctail.value = null;
   const data = await axios.get(COCTAIL_RANDOM_URL);
   coctail.value = data?.data?.drinks[0];
 }

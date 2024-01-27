@@ -11,7 +11,7 @@ import { components } from './components/UI/exportUiComponents'
 const app = createApp(App)
 
 components.forEach(component => {
-    app.component(component.name, component);
+    app.component(component.name, component.component);
 })
 
 app.use(createPinia())

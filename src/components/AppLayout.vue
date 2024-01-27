@@ -136,7 +136,6 @@ export default {
   top: 32px;
   left: 40px;
   right: 40px;
-  z-index: 5;
   .back-button {
     position: absolute;
     top: 0;
@@ -144,6 +143,7 @@ export default {
     background: transparent;
     border-color: $text;
     transition: 0.3s linear;
+    z-index: 15;
 
     &:hover {
       transform: scale(0.95);

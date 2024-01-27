@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <el-button type="primary" :icon="Back" circle />
+  <el-button class="back" type="primary" :icon="Back" circle />
 </template>
 
 
