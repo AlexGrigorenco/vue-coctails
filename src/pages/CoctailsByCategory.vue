@@ -60,6 +60,7 @@ watch(() => route.path, (newPath) => {
           </div>
         </div>
         <CoctailsList v-if="coctailsByCategory" :list="coctailsByCategory" />
+        <my-loader v-if="!coctailsByCategory" />
       </div>
     </div>
   </AppLayout>

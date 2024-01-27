@@ -25,6 +25,9 @@ export const useRootStore = defineStore("root", {
       );
       this.coctails = data?.data?.drinks;
     },
+    clearCoctails() {
+      this.coctails = [];
+    },
     setIngredient(val) {
       this.ingredient = val;
     },

@@ -12,6 +12,7 @@ export default {
 @import "@/assets/styles/main.scss";
 
 .loader-wrapper{
+    padding: 20px 0;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -22,8 +23,8 @@ export default {
   display: inline-block;
   position: relative;
   border: 2px solid #FFF;
-  -webkit-animation: animloader 2s linear infinite alternate;
-          animation: animloader 2s linear infinite alternate;
+  -webkit-animation: animloader 1s linear infinite alternate;
+          animation: animloader 1s linear infinite alternate;
   color: $accent;
   border-radius: 0 0 4px 4px;
   transform: perspective(140px) rotateX(-45deg);

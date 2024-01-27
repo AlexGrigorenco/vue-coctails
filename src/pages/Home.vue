@@ -13,14 +13,15 @@ function getCoctails() {
   rootStore.getCoctails(rootStore.ingredient);
 }
 
-function removeIngredient() {
-  rootStore.setIngredient(null)
+function resetHomeData() {
+  rootStore.setIngredient(null);
+  rootStore.clearCoctails();
 }
 </script>
 
 
 <template>
-  <AppLayout :imgName="ingredient ? `home-main-img-coctail-choice.jpg` : `home-bg.jpg`" :backFunc="removeIngredient" :backButtonVisible="!!ingredient">
+  <AppLayout :imgName="ingredient ? `home-main-img-coctail-choice.jpg` : `home-bg.jpg`" :backFunc="resetHomeData" :backButtonVisible="!!ingredient">
     <div class="wrapper container">
       <div v-if="!ingredient || !coctails">
         <div class="title">Choose your drink</div>
@@ -54,6 +55,7 @@ function removeIngredient() {
         <div class="line"></div>
         <CoctailsList :list="coctails" />
       </div>
+      <my-loader v-if="ingredient && !coctails.length" />
     </div>
   </AppLayout>
 </template>

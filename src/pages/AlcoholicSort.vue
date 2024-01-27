@@ -24,6 +24,7 @@ async function getAlcoholSortList() {
 }
 
 async function getCoctails() {
+  coctailsList.value = []
   const data = await axios.get(`${COCTAILS_SORT_BY_ALCOHOL_URL}${routePathName.value}`);
   coctailsList.value = data?.data?.drinks;
 }
@@ -64,6 +65,7 @@ fetchData()
           </div>
         </div>
         <CoctailsList v-if="coctailsList" :list="coctailsList"/>
+        <my-loader v-if="!coctailsList.length" />
       </div>
     </div>
   </AppLayout>

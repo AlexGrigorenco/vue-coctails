@@ -127,6 +127,7 @@ getCoctail();
           > {{ coctail.strCategory }}</RouterLink>
         </div>
     </div>
+    <div v-if="!coctail" class="wrapper container"><my-loader /></div>
   </AppLayout>
 </template>
 
