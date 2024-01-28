@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 import { computed, ref, onMounted, watch } from "vue";
 import CoctailsList from "@/components/CoctailsList.vue";
+import CategoriesList from "@/components/CategoriesList.vue";
 import { COCTAILS_BY_CATEGORY_URL } from '@/constants'
 import axios from "axios";
 
@@ -20,10 +21,8 @@ const coctailsByCategory = ref([])
 
 const categoryPathName = computed(() => route.path.split("/").pop().replace('_', ' / ').replace('%20', ' '));
 
-function categoryActive(name) {
-  return categoryPathName.value === name
-}
 async function getCoctailsByCategory(category) {
+  coctailsByCategory.value = [];
   const data = await axios.get(`${COCTAILS_BY_CATEGORY_URL}${category}`);
   coctailsByCategory.value = data?.data?.drinks
 }
@@ -36,8 +35,7 @@ onMounted(() => {
   fetchData();
 });
 
-watch(() => route.path, (newPath) => {
-  categoryPathName.value = newPath.split('/').pop().replace('_', ' / ').replace('%20', ' ');
+watch(() => route.path, () => {
   fetchData();
 });
 
@@ -49,18 +47,9 @@ watch(() => route.path, (newPath) => {
       <div v-if="categories">
         <div class="title">{{ categoryPathName }}</div>
         <div class="line"></div>
-        <div class="categories-list">
-          <div class="category" v-for="category in categories" :key="category"
-            :class="{ active: categoryActive(category.strCategory) }">
-            <RouterLink 
-            :to="`/categories/${category.strCategory.replace(' / ', '_').replace(' ', '%20')}`"
-            @click="getCoctailsByCategory()">
-              {{ category.strCategory }}
-            </RouterLink>
-          </div>
-        </div>
+        <CategoriesList v-if="categories" :categories="categories"/>
         <CoctailsList v-if="coctailsByCategory" :list="coctailsByCategory" />
-        <my-loader v-if="!coctailsByCategory" />
+        <my-loader v-if="!coctailsByCategory.length" />
       </div>
     </div>
   </AppLayout>
@@ -80,52 +69,6 @@ watch(() => route.path, (newPath) => {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-  }
-}
-
-.categories-list {
-  padding-top: 50px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-
-  .category {
-    cursor: pointer;
-    padding: 8px 4px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid $text-muted;
-    border-radius: 8px;
-    transition: 0.3s linear;
-
-    &:hover {
-      color: $text;
-      border-color: $accent;
-      transform: scale(1.1);
-    }
-
-    &.active {
-      color: $text;
-      border-color: $accent;
-      transform: scale(1.1);
-      pointer-events: none;
-      box-shadow: 0 0 8px $accent;
-    }
-  }
-}
-
-@media (max-width: 900px) {
-  .categories-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 450px) {
-  .categories-list {
-    grid-template-columns: repeat(1, 1fr);
   }
 }
 </style>
