@@ -1,8 +1,8 @@
 <script setup>
 import AppLayout from "@/components/AppLayout.vue";
 import { COCTAIL_RANDOM_URL } from "@/constants";
-import { Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide, } from "swiper/vue";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/scss";
 import { computed, ref } from "vue";
 import axios from "axios";
@@ -46,26 +46,16 @@ const ingredients = computed(() => {
 });
 
 const cocktailId = computed(() => {
-  return coctail.value.idDrink
-})
+  return coctail.value.idDrink;
+});
 
 const coctailData = computed(() => {
   return {
     idDrink: coctail.value.idDrink,
     strDrink: coctail.value.strDrink,
-    strDrinkThumb: coctail.value.strDrinkThumb
-  }
-})
-
-function setIngredientBg(name) {
-  return {
-    backgroundImage: `url(https://www.thecocktaildb.com/images/ingredients/${name.replace(
-      / /g,
-      "%20"
-    )}-Small.png)`,
+    strDrinkThumb: coctail.value.strDrinkThumb,
   };
-}
-
+});
 
 async function getCoctail() {
   coctail.value = null;
@@ -82,23 +72,39 @@ getCoctail();
     :getCoctail="getCoctail"
   >
     <div v-if="coctail" class="wrapper container">
-      <div class="title">{{ coctail.strDrink }} <FavoritesButton :coctailData="coctailData" :isFavorites="Object.keys(favorites).includes(cocktailId)"/></div>
+      <div class="title">
+        {{ coctail.strDrink }}
+        <FavoritesButton
+          :coctailData="coctailData"
+          :isFavorites="Object.keys(favorites).includes(cocktailId)"
+        />
+      </div>
       <div class="line"></div>
       <div class="ingredient-list">
-        <swiper 
-        :modules="[Navigation]"
-        :breakpoints="swiperBreackpoints"
-        :navigation="{
-          enabled: true,
-          prevEl: '.prev',
-          nextEl: '.next',
-        }">
+        <swiper
+          :modules="[Navigation]"
+          :breakpoints="swiperBreackpoints"
+          :navigation="{
+            enabled: true,
+            prevEl: '.prev',
+            nextEl: '.next',
+          }"
+        >
           <swiper-slide
             class="slide"
             v-for="(ingredient, i) in ingredients"
             :key="i"
           >
-            <div :style="setIngredientBg(ingredient.name)" class="image"></div>
+            <div class="image">
+              <img
+                :src="`https://www.thecocktaildb.com/images/ingredients/${ingredient.name.replace(
+                  / /g,
+                  '%20'
+                )}-Small.png`"
+                alt="image"
+                loading="lazy"
+              />
+            </div>
             <div class="name">
               {{ ingredient.name }}
             </div>
@@ -107,26 +113,32 @@ getCoctail();
             </div>
           </swiper-slide>
         </swiper>
-        <div class="prev slider-button"><IconArrowSvg/></div>
-        <div class="next slider-button"><IconArrowSvg/></div>
+        <div class="prev slider-button"><IconArrowSvg /></div>
+        <div class="next slider-button"><IconArrowSvg /></div>
       </div>
       <div class="coctail-formula">
         {{ coctail.strInstructions }}
         <div class="alcoholic">
-              This is 
-              <RouterLink class="link"
-              :to="`/alcoholic/${coctail.strAlcoholic.replace(' ', '_')}`"
-              >{{ coctail.strAlcoholic }}</RouterLink>
-              coctail
-            </div>
+          This is
+          <RouterLink
+            class="link"
+            :to="`/alcoholic/${coctail.strAlcoholic.replace(' ', '_')}`"
+            >{{ coctail.strAlcoholic }}</RouterLink
+          >
+          coctail
+        </div>
       </div>
       <div class="category">
-          category: 
-          <RouterLink 
+        category:
+        <RouterLink
           class="link"
-          :to="`/categories/${coctail.strCategory.replace(' / ', '_').replace(' ', '%20')}`"
-          > {{ coctail.strCategory }}</RouterLink>
-        </div>
+          :to="`/categories/${coctail.strCategory
+            .replace(' / ', '_')
+            .replace(' ', '%20')}`"
+        >
+          {{ coctail.strCategory }}</RouterLink
+        >
+      </div>
     </div>
     <div v-if="!coctail" class="wrapper container"><my-loader /></div>
   </AppLayout>
@@ -145,7 +157,7 @@ getCoctail();
   margin: 0 auto;
 }
 
-.slider-button{
+.slider-button {
   cursor: pointer;
   height: 60px;
   width: 40px;
@@ -154,31 +166,31 @@ getCoctail();
   transform: translateY(-50%);
   z-index: 10;
 
-  svg{
+  svg {
     fill: $accent;
     width: 100%;
     height: 100%;
   }
 
-  &.prev{
+  &.prev {
     left: 0;
   }
 
-  &.next{
+  &.next {
     right: 0;
 
-    svg{
+    svg {
       transform: rotate(180deg);
     }
   }
-  &.swiper-button-disabled{
-    opacity: .3;
+  &.swiper-button-disabled {
+    opacity: 0.3;
 
-    svg{
+    svg {
       fill: $text-muted;
     }
   }
-  &.swiper-button-lock{
+  &.swiper-button-lock {
     display: none;
     pointer-events: none;
   }
@@ -201,7 +213,13 @@ getCoctail();
       width: 100%;
       aspect-ratio: 1/1;
       background-repeat: no-repeat;
-      background-size: cover;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     .name {
@@ -209,19 +227,19 @@ getCoctail();
     }
 
     .measure {
-        width: max-content;
-        position: inherit;
-        padding-top: 4px;
+      width: max-content;
+      position: inherit;
+      padding-top: 4px;
 
-        &::after{
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 1px;
-            left: 0;
-            top: 0;
-            background-color: $accent;
-        }
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        top: 0;
+        background-color: $accent;
+      }
     }
   }
 }
@@ -235,12 +253,12 @@ getCoctail();
     text-align: right;
     padding-top: 10px;
 
-    .link{
+    .link {
       color: $accent;
       display: inline-block;
-      transition: .3s linear;
+      transition: 0.3s linear;
 
-      &:hover{
+      &:hover {
         transform: scale(1.05);
       }
     }
@@ -255,7 +273,7 @@ getCoctail();
     display: inline-block;
     padding-left: 8px;
     color: $accent;
-    transition: .3s linear;
+    transition: 0.3s linear;
 
     &:hover {
       transform: scale(1.1);

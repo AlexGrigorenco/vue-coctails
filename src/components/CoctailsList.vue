@@ -29,7 +29,7 @@ import CoctailThumb from "@/components/CoctailThumb.vue";
   padding-top: 60px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  row-gap: 40px;
 }
 @media (max-width: 900px) {
   .coctails-list {

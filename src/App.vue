@@ -1,5 +1,4 @@
-<script>
-export default {};
+<script setup>
 </script>
 
 <template>
@@ -7,9 +6,4 @@ export default {};
 </template>
 
 <style lang="scss" scoped>
-nav a{
-  color: red;
-  position: relative;
-  z-index: 10;
-}
 </style>

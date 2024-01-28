@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-  <RouterLink :to="`/coctails/${coctail.idDrink}`" class="root">
+  <RouterLink :id="coctail.strDrink" :to="`/coctails/${coctail.idDrink}`" class="root">
     <div class="img"><img :src="coctail.strDrinkThumb" loading="lazy" alt="image"></div>
     <div class="name">
         {{ coctail.strDrink }}
