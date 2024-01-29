@@ -49,7 +49,7 @@ export default {
       this.menuIsActive = false;
     },
     goToIngredients() {
-      this.routeName.split('/')[1] === 'ingredients' ? this.router.push(`null`) : this.router.push(`/ingredients/null`);
+      this.router.push('/ingredients')
       this.menuIsActive = false;
     },
     goHome() {

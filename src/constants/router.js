@@ -5,6 +5,7 @@ export const ROUTER_PATH = {
     CATEGORIES: '/categories',
     COCTAILS_BY_CATEGORY: '/categories/:category',
     COCTAILS_SORT_BY_ALCOHOL: '/alcoholic/:alcohol',
-    INGREDIENTS: '/ingredients/:ingredientsList',
+    INGREDIENTS: '/ingredients',
+    COCTAILS_SORT_BY_INGREDIENTS: '/ingredients/:ingredientsList',
     FAVORITES: '/favorites',
 }

@@ -7,6 +7,7 @@ import Categories from '@/pages/Categories.vue'
 import CoctailsByCategory from '@/pages/CoctailsByCategory.vue'
 import AlcoholicSort from '@/pages/AlcoholicSort.vue'
 import IngredientsPage from '@/pages/IngredientsPage.vue'
+import CoctailsByIngredients from '@/pages/CoctailsByIngredients.vue'
 import FavoritesPage from '@/pages/FavoritesPage.vue'
 
 const routes = [
@@ -44,6 +45,11 @@ const routes = [
     path: ROUTER_PATH.INGREDIENTS,
     name: ROUTER_PATH.INGREDIENTS,
     component: IngredientsPage
+  },
+  {
+    path: ROUTER_PATH.COCTAILS_SORT_BY_INGREDIENTS,
+    name: ROUTER_PATH.COCTAILS_SORT_BY_INGREDIENTS,
+    component: CoctailsByIngredients
   },
   {
     path: ROUTER_PATH.FAVORITES,
