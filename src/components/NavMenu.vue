@@ -167,10 +167,6 @@ export default {
     margin: 0;
     z-index: 15;
 
-    &.hidden{
-      display: none;
-    }
-
     &.empty{
       opacity: .5;
     }

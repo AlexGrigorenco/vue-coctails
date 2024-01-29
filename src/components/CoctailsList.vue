@@ -1,23 +1,27 @@
 <script>
 import CoctailThumb from "@/components/CoctailThumb.vue";
 
-    export default {
-        components: {
-          CoctailThumb,
-        },
-        props: {
-            list: {
-                type: Array,
-                required: true,
-            }
-        }
-    }
+export default {
+  components: {
+    CoctailThumb,
+  },
+  props: {
+    list: {
+      type: Array,
+      required: true,
+    },
+  },
+};
 </script>
 
 <template>
   <div class="coctails-list">
-          <CoctailThumb v-for="coctail in list" :key="coctail.idDrink" :coctail="coctail" />
-        </div>
+    <CoctailThumb
+      v-for="coctail in list"
+      :key="coctail"
+      :coctail="coctail"
+    />
+  </div>
 </template>
 
 
@@ -33,8 +37,8 @@ import CoctailThumb from "@/components/CoctailThumb.vue";
 }
 @media (max-width: 900px) {
   .coctails-list {
-  grid-template-columns: repeat(2, 1fr);
-}
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 @media (max-width: 450px) {
   .coctails-list {

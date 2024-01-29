@@ -99,7 +99,7 @@ onMounted(() => {
             {{ ingredientName }} <span>/ </span>
           </span>
         </div>
-        <div @click="clean" class="clean">clean</div>
+        <div @click="clean" class="clean">clean <span>({{ coctailsListSorted.length }} items)</span></div>
         <div class="line"></div>
         <div v-if="coctailsListSorted.length" class="coctail-list">
         <swiper
@@ -117,7 +117,7 @@ onMounted(() => {
             v-for="(coctail, i) in coctailsListSorted"
             :key="i"
           >
-          <CoctailThumb :coctail="coctail" />
+          <CoctailThumb :coctail="coctail" :index="i + 1" :amountShow="true"/>
           </swiper-slide>
         </swiper>
         <div class="prev slider-button"><IconArrowSvg /></div>
@@ -173,11 +173,11 @@ onMounted(() => {
   }
 
   &.prev {
-    left: 0;
+    left: -10px;
   }
 
   &.next {
-    right: 0;
+    right: -10px;
 
     svg {
       transform: rotate(180deg);
@@ -229,6 +229,7 @@ onMounted(() => {
   }
 }
 .clean {
+  text-transform: uppercase;
   cursor: pointer;
   padding: 14px 0;
   font-size: 20px;
@@ -237,6 +238,12 @@ onMounted(() => {
 
   &:hover {
     transform: translateY(-2px);
+  }
+
+  span {
+    color: $text;
+    text-transform: lowercase;
+    font-size: 14px;
   }
 }
 .text {

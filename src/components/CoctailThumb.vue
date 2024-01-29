@@ -3,7 +3,15 @@ export default {
     props: {
         coctail: {
             type: Object,
-            required: true
+            required: true,
+        },
+        index: {
+            type: Number,
+            required: true,
+        },
+        amountShow: {
+            type: Boolean,
+            default: false,
         }
     }
 }
@@ -11,7 +19,10 @@ export default {
 
 <template>
   <RouterLink :id="coctail.strDrink" :to="`/coctails/${coctail.idDrink}`" class="thumb">
-    <div class="img"><img :src="coctail.strDrinkThumb" loading="lazy" alt="image"></div>
+    <div class="img">
+        <div v-if="amountShow" class="amount">{{ index }}</div>
+        <img :src="coctail.strDrinkThumb" loading="lazy" alt="image">
+    </div>
     <div class="name">
         {{ coctail.strDrink }}
     </div>
@@ -73,6 +84,16 @@ export default {
                 transform: translateX(400%) rotate(10deg);
             }
         }
+    }
+
+    .amount{
+        font-size: 16px;
+        color: $text;
+        text-shadow: 0 0 8px #000;
+        position: absolute;
+        top: 2px;
+        right: 6px;
+        z-index: 6;
     }
 
     img{

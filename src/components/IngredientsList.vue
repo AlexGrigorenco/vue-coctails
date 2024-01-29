@@ -7,7 +7,7 @@ export default {
     },
     ingredientsActiveList: {
       type: Array,
-    },
+    }
   },
   methods: {
     clickHandle(name) {
@@ -43,7 +43,7 @@ export default {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
+  gap: 4px;
 
   .ingredients-item {
     display: flex;
@@ -61,6 +61,7 @@ export default {
     }
 
     &.active {
+        color: $text-muted;
       box-shadow: inset 0 0 18px $accent;
     }
   }
