@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-  <RouterLink :id="coctail.strDrink" :to="`/coctails/${coctail.idDrink}`" class="root">
+  <RouterLink :id="coctail.strDrink" :to="`/coctails/${coctail.idDrink}`" class="thumb">
     <div class="img"><img :src="coctail.strDrinkThumb" loading="lazy" alt="image"></div>
     <div class="name">
         {{ coctail.strDrink }}
@@ -22,16 +22,19 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/styles/main.scss";
 
-.root{
+.thumb{
     cursor: pointer;
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 16px;
 
-    &:hover {
+    &:hover .name{
+        color: $accent;
+    }
+
+    &:hover img{
         transform: scale(1.1);
-        transition: .3s linear;
     }
 }
 .img{
@@ -78,13 +81,12 @@ export default {
         height: 100%;
         object-fit: cover;
         z-index: 5;
+        transition: .4s linear;
     }
 }
 .name{
     text-align: center;
     transition: .3s linear;
-    &:hover {
-        color: $accent;
-    }
+    transition: .4s linear;
 }
 </style>
