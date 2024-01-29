@@ -95,7 +95,7 @@ export default {
 .root {
   display: flex;
   background: $background;
-  height: 100vh;
+  height: 100dvh;
 }
 .base-bg {
   position: relative;

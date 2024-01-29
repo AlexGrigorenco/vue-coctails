@@ -28,12 +28,18 @@ export default {
         favorites
     }
   },
+  mounted() {
+    this.showRouteName();
+  },
   computed: {
     routeName() {
       return this.route.name;
     },
   },
   methods: {
+    showRouteName() {
+      console.log(this.routeName)
+    },
     goToCoctailRandom() {
       this.router.push(ROUTER_PATH.COCTAIL_RANDOM);
       if (this.routeName === ROUTER_PATH.COCTAIL_RANDOM) {
@@ -69,16 +75,20 @@ export default {
         >Get random cocktail</el-button
       >
       <el-button 
+      v-if="!(routeName === '/favorites')"
       :class="{empty: !Object.keys(favorites).length}"
       class="bttn"
       @click="goToFavorites">Favorites</el-button>
       <el-button 
+      v-if="!(routeName === '/ingredients') && !(routeName === '/ingredients/:ingredientsList')"
       class="bttn"
       @click="goToIngredients">Ingredients</el-button>
       <el-button 
+      v-if="!(routeName === '/categories') && !(routeName === '/categories/:category')"
       class="bttn"
       @click="goToCategories">Categories</el-button>
       <el-button 
+      v-if="!(routeName === '/')"
       class="bttn"
       @click="goHome">Home</el-button>
     </div>
@@ -156,6 +166,10 @@ export default {
     transition: 0.3s linear;
     margin: 0;
     z-index: 15;
+
+    &.hidden{
+      display: none;
+    }
 
     &.empty{
       opacity: .5;

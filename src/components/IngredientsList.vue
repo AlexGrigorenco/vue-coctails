@@ -43,7 +43,7 @@ export default {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+
 
   .ingredients-item {
     display: flex;
@@ -65,4 +65,9 @@ export default {
     }
   }
 }
+@media (max-width: 400px) {
+    .ingredients-wrapper{
+        grid-template-columns: repeat(2, 1fr);
+    }
+  }
 </style>

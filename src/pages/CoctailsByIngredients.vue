@@ -2,12 +2,16 @@
 import AppLayout from "@/components/AppLayout.vue";
 import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/scss";
+import CoctailThumb from "@/components/CoctailThumb.vue";
 import { useRoute, useRouter } from "vue-router";
 import { computed, ref, onMounted, watch } from "vue";
-import coctailsList from "@/components/CoctailsList.vue";
 import IngredientsList from "@/components/IngredientsList.vue";
 import axios from "axios";
 import { COCTAILS_BY_INGREGIENT_URL } from "@/constants";
+import IconArrowSvg from "@/components/IconArrowSvg.vue";
 
 const rootStore = useRootStore();
 rootStore.getIngredients();
@@ -16,6 +20,18 @@ const route = useRoute();
 const router = useRouter();
 
 const { ingredients } = storeToRefs(rootStore);
+
+const swiperBreackpoints = {
+  0: {
+    slidesPerView: 1,
+  },
+  400: {
+    slidesPerView: 2,
+  },
+  950: {
+    slidesPerView: 3,
+  },
+};
 
 const ingredientList = computed(() => {
   return route.path.split("/").pop().replace(/%20/g, " ").split("_");
@@ -85,9 +101,28 @@ onMounted(() => {
         </div>
         <div @click="clean" class="clean">clean</div>
         <div class="line"></div>
-        <div v-if="coctailsListSorted.length" class="coctails-wrapper">
-          <coctailsList :list="coctailsListSorted" class="list" />
-        </div>
+        <div v-if="coctailsListSorted.length" class="coctail-list">
+        <swiper
+          :modules="[Navigation]"
+          :space-between="0"
+          :breakpoints="swiperBreackpoints"
+          :navigation="{
+            enabled: true,
+            prevEl: '.prev',
+            nextEl: '.next',
+          }"
+        >
+          <swiper-slide
+            class="slide"
+            v-for="(coctail, i) in coctailsListSorted"
+            :key="i"
+          >
+          <CoctailThumb :coctail="coctail" />
+          </swiper-slide>
+        </swiper>
+        <div class="prev slider-button"><IconArrowSvg /></div>
+        <div class="next slider-button"><IconArrowSvg /></div>
+      </div>
         <div v-if="!coctailsListSorted.length" class="text">
           No cocktails with these ingredients
         </div>
@@ -119,6 +154,60 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+  }
+}
+
+.slider-button {
+  cursor: pointer;
+  height: 60px;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  svg {
+    fill: $accent;
+    width: 100%;
+    height: 100%;
+  }
+
+  &.prev {
+    left: 0;
+  }
+
+  &.next {
+    right: 0;
+
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+  &.swiper-button-disabled {
+    opacity: 0.3;
+
+    svg {
+      fill: $text-muted;
+    }
+  }
+  &.swiper-button-lock {
+    display: none;
+    pointer-events: none;
+  }
+}
+.coctail-list {
+  position: relative;
+  width: 100%;
+  padding: 50px 0;
+  font-size: 18px;
+  max-width: 500px;
+
+  .slide {
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 }
 
