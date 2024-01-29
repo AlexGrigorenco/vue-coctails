@@ -3,6 +3,7 @@ import AppLayout from "@/components/AppLayout.vue";
 import { useRootStore } from "@/stores/root";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import IngredientsList from "@/components/IngredientsList.vue";
 
 const rootStore = useRootStore();
 rootStore.getIngredients();
@@ -31,16 +32,7 @@ async function setIngredient(name) {
           to satisfy your taste buds. Choose from the list, create your unique
           combinations, and embark on your culinary adventure!
         </div>
-        <div class="ingredients-wrapper">
-          <div
-            v-for="ingredient in ingredients"
-            :key="ingredient"
-            class="ingredients-item"
-            @click="setIngredient(ingredient.strIngredient1)"
-          >
-            {{ ingredient.strIngredient1 }}
-          </div>
-        </div>
+        <IngredientsList v-if="ingredients" :ingredientsList="ingredients" @clickToIngredientName="setIngredient" />
       </div>
     </div>
   </AppLayout>
@@ -65,15 +57,6 @@ async function setIngredient(name) {
     flex-direction: column;
   }
 }
-
-.coctails-wrapper {
-  max-height: 500px;
-  overflow-y: auto;
-  margin-top: 20px;
-  width: 100%;
-  padding-bottom: 20px;
-}
-
 .title {
   span span {
     color: $accent;
@@ -81,17 +64,6 @@ async function setIngredient(name) {
 
   span:last-child span {
     display: none;
-  }
-}
-.clean {
-  cursor: pointer;
-  padding: 14px 0;
-  font-size: 20px;
-  color: $accent;
-  transition: 0.2s linear;
-
-  &:hover {
-    transform: translateY(-2px);
   }
 }
 .text {
@@ -102,35 +74,5 @@ async function setIngredient(name) {
   line-height: 36px;
   letter-spacing: 1.6px;
   font-weight: 400;
-}
-.ingredients-wrapper {
-  padding-top: 40px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-
-  .ingredients-item {
-    display: flex;
-    padding: 8px 4px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border: 1px solid $accent;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: 0.3s linear;
-
-    &:hover {
-      transform: scale(1.03);
-    }
-
-    &.active {
-      color: $text-muted;
-      border-color: transparent;
-      box-shadow: 0 0 4px $accent;
-      opacity: 0.8;
-    }
-  }
 }
 </style>

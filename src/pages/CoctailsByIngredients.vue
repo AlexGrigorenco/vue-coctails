@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { computed, ref, onMounted, watch } from "vue";
 import coctailsList from "@/components/CoctailsList.vue";
+import IngredientsList from "@/components/IngredientsList.vue";
 import axios from "axios";
 import { COCTAILS_BY_INGREGIENT_URL } from "@/constants";
 
@@ -56,11 +57,7 @@ async function fetchData() {
     const data = await axios.get(`${COCTAILS_BY_INGREGIENT_URL}${ingredient}`);
     coctailsListResult.push(data?.data?.drinks);
   }
-  coctailsLists.value = coctailsListResult
-}
-
-function ingredientIsActive(name) {
-  return ingredientList.value.includes(name);
+  coctailsLists.value = coctailsListResult;
 }
 
 function clean() {
@@ -86,30 +83,20 @@ onMounted(() => {
             {{ ingredientName }} <span>/ </span>
           </span>
         </div>
-        <div @click="clean" class="clean">
-          clean
-        </div>
+        <div @click="clean" class="clean">clean</div>
         <div class="line"></div>
         <div v-if="coctailsListSorted.length" class="coctails-wrapper">
           <coctailsList :list="coctailsListSorted" class="list" />
         </div>
-        <div
-          v-if="!coctailsListSorted.length"
-          class="text"
-        >
+        <div v-if="!coctailsListSorted.length" class="text">
           No cocktails with these ingredients
         </div>
-        <div class="ingredients-wrapper">
-          <div
-            v-for="ingredient in ingredients"
-            :key="ingredient"
-            class="ingredients-item"
-            @click="setIngredient(ingredient.strIngredient1)"
-            :class="{ active: ingredientIsActive(ingredient.strIngredient1) }"
-          >
-            {{ ingredient.strIngredient1 }}
-          </div>
-        </div>
+        <IngredientsList
+          v-if="ingredients"
+          :ingredientsList="ingredients"
+          :ingredientsActiveList="ingredientList"
+          @clickToIngredientName="setIngredient"
+        />
       </div>
     </div>
   </AppLayout>
@@ -171,36 +158,5 @@ onMounted(() => {
   line-height: 36px;
   letter-spacing: 1.6px;
   font-weight: 400;
-}
-
-.ingredients-wrapper {
-  padding-top: 40px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-
-  .ingredients-item {
-    display: flex;
-    padding: 8px 4px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border: 1px solid $accent;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: 0.3s linear;
-
-    &:hover {
-      transform: scale(1.03);
-    }
-
-    &.active {
-      color: $text-muted;
-      border-color: transparent;
-      box-shadow: 0 0 4px $accent;
-      opacity: 0.8;
-    }
-  }
 }
 </style>
